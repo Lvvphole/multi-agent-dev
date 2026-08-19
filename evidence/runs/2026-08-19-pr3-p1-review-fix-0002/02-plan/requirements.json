@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr3-p1-review-fix-0002",
-  "status": "FROZEN_BY_HUMAN_DIRECTIVE",
+  "status": "REVISION_2_FROZEN_BY_HUMAN_DIRECTIVE",
   "requirements": [
     {
       "id": "PR3-P1-ABSOLUTE-003",
@@ -38,6 +38,31 @@
         "the full mutation suite rejects every known-bad repository"
       ],
       "failure_action": "FAIL and return to Build."
+    },
+    {
+      "id": "PR3-P1-RENDERED-006",
+      "source_thread": "PRRT_kwDOT3jdV86aV76u",
+      "source_comment": "PRRC_kwDOT3jdV87jF5zY",
+      "predicate": "Only route bindings active in rendered Markdown can satisfy the required-route contract.",
+      "acceptance_evidence": [
+        "wrapping the required route table in an HTML comment is rejected",
+        "wrapping the required route table in a fenced code block is rejected",
+        "the unchanged rendered route table passes"
+      ],
+      "failure_action": "BLOCK checker qualification and repair rendered-region parsing."
+    },
+    {
+      "id": "PR3-P1-INTEGRITY-COMMAND-007",
+      "source_thread": "PRRT_kwDOT3jdV86aV76x",
+      "source_comment": "PRRC_kwDOT3jdV87jF5zf",
+      "predicate": "Every evidence-integrity PASS identifies and executes a persisted verifier with an exact reproducible command.",
+      "acceptance_evidence": [
+        "persisted verifier script with recorded SHA-256 identity",
+        "known-good manifest accepted",
+        "bad digest, missing file, malformed digest, and outside-repository path rejected",
+        "exact verifier command and raw output recorded for the run manifest"
+      ],
+      "failure_action": "Treat evidence integrity as BLOCKED."
     }
   ],
   "scope_exclusions": [

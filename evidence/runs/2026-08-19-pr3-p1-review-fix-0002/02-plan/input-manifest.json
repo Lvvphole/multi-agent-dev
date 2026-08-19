@@ -1,17 +1,18 @@
 {
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr3-p1-review-fix-0002",
-  "status": "FROZEN_BY_HUMAN_DIRECTIVE",
-  "base_commit": "94b8cb24d8e033a4e08e11656343c1989c2c9c20",
+  "status": "REVISION_2_FROZEN_BY_HUMAN_DIRECTIVE",
+  "plan_revision": 2,
+  "base_commit": "47e903b2b68c8bb9315b54fd3be40b1121bd1dc1",
   "accepted_scout_inputs": [
     {
       "path": "../01-scout/findings.md",
-      "sha256": "a08100034fec3c4fe6a86c93acd26ee16c6e53d0bcedbe61e0f120ff71a474eb",
+      "sha256": "efae73739e7b600787bd1bb096e23b271cea9091a2a4b19c9c15bdd86cd95952",
       "acceptance": "ACCEPTED_SCOPE_BY_HUMAN_DIRECTIVE"
     },
     {
       "path": "../01-scout/source-manifest.json",
-      "sha256": "1676bcabd0a54234ea1fb93158a939f0f194b0d5ba41d421e2f440ffeb0825ba",
+      "sha256": "aa584f4b9246535287ca1d0802bb8364f3947b22e67af5ffe73a6f85ed5893e1",
       "acceptance": "ACCEPTED_SCOPE_BY_HUMAN_DIRECTIVE"
     }
   ],

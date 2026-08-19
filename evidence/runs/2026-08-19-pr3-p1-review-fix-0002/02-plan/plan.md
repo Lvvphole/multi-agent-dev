@@ -2,7 +2,7 @@
 
 Run: `2026-08-19-pr3-p1-review-fix-0002`
 
-Status: `FROZEN_BY_HUMAN_DIRECTIVE`
+Status: `REVISION_2_FROZEN_BY_HUMAN_DIRECTIVE`
 
 ## Current state
 
@@ -11,10 +11,12 @@ The reviewed checker validates normalized local route bindings but normalizes an
 ## Desired state
 
 - Every local Markdown route target is repository-relative before resolution.
+- Required bindings are counted only when they are active in rendered Markdown, not hidden in HTML comments or fenced code.
 - POSIX and Windows absolute targets are rejected deterministically.
 - Existing redirect, swap, outside-repository, canonical-sequence, and invariant mutations remain rejected.
 - Historical run `2026-08-19-pr1-p1-review-fix-0001` truthfully reports `BLOCKED` for missing predecessor-stage continuity.
 - This replacement run preserves a digest-bound Scout-to-Test trajectory and does not claim independent Codex acceptance before it exists.
+- Evidence integrity is executed by a persisted, qualified verifier whose exact command and file digest are recorded.
 
 ## Smallest vertical slice
 
@@ -22,7 +24,9 @@ The reviewed checker validates normalized local route bindings but normalizes an
 2. Add POSIX and Windows absolute-target mutations.
 3. Mark the incomplete historical run `BLOCKED` with its reason.
 4. Produce the required Build and Test artifacts for this accepted and frozen Plan.
-5. Submit the exact evidence-bound head to Codex and continue only if the review has no major issue.
+5. Filter non-rendered Markdown regions and add HTML-comment and fenced-code mutations.
+6. Persist and qualify a deterministic evidence-manifest verifier, then record its exact invocation and identity.
+7. Submit the exact evidence-bound head to Codex and continue only if the review has no major issue.
 
 ## Boundaries and exclusions
 

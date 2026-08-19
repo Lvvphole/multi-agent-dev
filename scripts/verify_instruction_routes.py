@@ -86,6 +86,7 @@ CANONICAL_SEQUENCE_PATTERN = re.compile(
     re.DOTALL,
 )
 CANONICAL_STAGE_LINE_PATTERN = re.compile(r"(?:->\s+)?Stage (\d+) (.+)")
+FENCE_OPEN_PATTERN = re.compile(r"^[ \t]{0,3}(?P<marker>`{3,}|~{3,})")
 
 
 def path_label_binding(
@@ -97,6 +98,60 @@ def path_label_binding(
 
 def is_absolute_route_target(target: str) -> bool:
     return PurePosixPath(target).is_absolute() or PureWindowsPath(target).is_absolute()
+
+
+def strip_html_comments(line: str, in_comment: bool) -> tuple[str, bool]:
+    visible: list[str] = []
+    cursor = 0
+    while cursor < len(line):
+        if in_comment:
+            comment_end = line.find("-->", cursor)
+            if comment_end == -1:
+                return "".join(visible), True
+            cursor = comment_end + 3
+            in_comment = False
+            continue
+
+        comment_start = line.find("<!--", cursor)
+        if comment_start == -1:
+            visible.append(line[cursor:])
+            break
+        visible.append(line[cursor:comment_start])
+        cursor = comment_start + 4
+        in_comment = True
+
+    return "".join(visible), in_comment
+
+
+def rendered_markdown_lines(markdown: str) -> tuple[str, ...]:
+    visible_lines: list[str] = []
+    in_comment = False
+    fence_character: str | None = None
+    fence_length = 0
+
+    for raw_line in markdown.splitlines():
+        if fence_character is not None:
+            closing_fence = re.fullmatch(
+                rf"[ \t]{{0,3}}{re.escape(fence_character)}{{{fence_length},}}[ \t]*",
+                raw_line,
+            )
+            if closing_fence is not None:
+                fence_character = None
+                fence_length = 0
+            continue
+
+        line, in_comment = strip_html_comments(raw_line, in_comment)
+        if line.startswith("    ") or line.startswith("\t"):
+            continue
+        opening_fence = FENCE_OPEN_PATTERN.match(line)
+        if opening_fence is not None:
+            marker = opening_fence.group("marker")
+            fence_character = marker[0]
+            fence_length = len(marker)
+            continue
+        visible_lines.append(line)
+
+    return tuple(visible_lines)
 
 
 EXPECTED_ROUTE_BINDINGS = {
@@ -183,7 +238,8 @@ def local_route_bindings(
 ) -> tuple[tuple[str, str, str], ...]:
     source = path.relative_to(ROOT).as_posix()
     bindings: list[tuple[str, str, str]] = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    markdown = path.read_text(encoding="utf-8")
+    for line in rendered_markdown_lines(markdown):
         for link in LINK_PATTERN.finditer(line):
             label, target = link.groups()
             if "://" in target or target.startswith("#"):

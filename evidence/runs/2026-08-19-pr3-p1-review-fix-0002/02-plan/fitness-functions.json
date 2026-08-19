@@ -49,6 +49,30 @@
       "evidence_contract": "exact command, checker digest, raw output, timestamps, exit status",
       "owner": "Build and Test principals",
       "failure_action": "Return to Build"
+    },
+    {
+      "id": "FF-RENDERED-ROUTES",
+      "source_requirement": "PR3-P1-RENDERED-006",
+      "characteristic": "rendered instruction availability",
+      "scope": "governed local route declarations",
+      "trigger": "every route-checker or governed Markdown change",
+      "predicate": "Bindings hidden in HTML comments or fenced code do not satisfy required-route bindings.",
+      "implementation": "rendered-Markdown line filter plus two independent mutation tests",
+      "evidence_contract": "exact unittest command, raw output, timestamps, test digest",
+      "owner": "Test principal",
+      "failure_action": "BLOCK checker qualification"
+    },
+    {
+      "id": "FF-EVIDENCE-MANIFEST",
+      "source_requirement": "PR3-P1-INTEGRITY-COMMAND-007",
+      "characteristic": "evidence reproducibility and integrity",
+      "scope": "declared paths and SHA-256 values in a Test evidence manifest",
+      "trigger": "every evidence manifest publication",
+      "predicate": "A persisted verifier accepts the known-good run and rejects bad digest, missing file, malformed digest, and repository-escape fixtures.",
+      "implementation": "scripts/verify_evidence_manifest.py with tests/evidence/test_verify_evidence_manifest.py",
+      "evidence_contract": "script digest, exact production and qualification commands, raw outputs, timestamps, exit statuses",
+      "owner": "Test and Review principals",
+      "failure_action": "BLOCK the evidence verdict"
     }
   ]
 }

@@ -8,11 +8,20 @@ The repository maintainer directed the agent to read and comply with `AGENTS.md`
 
 ## Observed current state
 
-- PR #3 head `94b8cb24d8e033a4e08e11656343c1989c2c9c20` has two current, non-outdated P1 Codex threads.
+- PR #3 review at head `94b8cb24d8e033a4e08e11656343c1989c2c9c20` exposed the absolute-target and missing-predecessor P1 findings described below.
 - Thread `PRRT_kwDOT3jdV86aVzHN` shows that an absolute Markdown target inside the current checkout is normalized back to the expected repository-relative path. The current checker therefore accepts a machine-specific route.
 - Thread `PRRT_kwDOT3jdV86aVzHP` shows that run `2026-08-19-pr1-p1-review-fix-0001` has Build and Test artifacts but no accepted Scout or frozen Plan inputs. Its PASS claim is not admissible under the implementation workflow.
 - The existing route checker and its 17-test qualification suite pass at the reviewed head. This does not disprove either P1 because the suite has no absolute-path mutation and the run evidence lacks predecessor-stage continuity.
 - Human merge remains the final gate. This task does not authorize merge.
+
+### Scout revision 2
+
+Codex review at head `47e903b2b68c8bb9315b54fd3be40b1121bd1dc1` exposed two further current P1 findings:
+
+- Thread `PRRT_kwDOT3jdV86aV76u`: the raw-line link scan counts bindings hidden inside HTML comments or fenced code, so required routes can disappear from rendered Markdown while the checker passes.
+- Thread `PRRT_kwDOT3jdV86aV76x`: the evidence-integrity result records only a prose method and PASS assertion, not an exact executable command or persisted verifier identity.
+
+The accepted scope therefore adds rendered-Markdown filtering, negative controls for hidden route declarations, and a persisted, qualified evidence-manifest verifier with an exact invocation.
 
 ## Applicable locked requirements
 
@@ -31,6 +40,7 @@ The repository maintainer directed the agent to read and comply with `AGENTS.md`
 - External Codex acceptance is pending and cannot be claimed by the producer.
 - No runtime, persistence, authority, dependency, or enterprise-architecture change is required.
 - The prior run is historical evidence and must be marked `BLOCKED` rather than rewritten as if its missing predecessor stages had existed.
+- Plan revision 2 must be frozen before implementing the two findings from review commit `47e903b2b68c8bb9315b54fd3be40b1121bd1dc1`.
 
 ## Scout disposition
 

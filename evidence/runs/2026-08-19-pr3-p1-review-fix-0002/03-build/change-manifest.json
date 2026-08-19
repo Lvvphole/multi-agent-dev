@@ -1,13 +1,14 @@
 {
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr3-p1-review-fix-0002",
-  "base_commit": "94b8cb24d8e033a4e08e11656343c1989c2c9c20",
-  "build_candidate_commit": "830888e8f0c1db8bbbb745a021c9374b8a46d3b2",
+  "base_commit": "47e903b2b68c8bb9315b54fd3be40b1121bd1dc1",
+  "plan_revision": 2,
+  "build_candidate_commit": "PENDING_PUBLICATION",
   "frozen_plan_inputs": [
-    {"path": "../02-plan/plan.md", "sha256": "014647a60239a0161657a2ce36d8541d9baedce07babe58b5d741d018d4d87e9"},
-    {"path": "../02-plan/requirements.json", "sha256": "59b5222d0d6043a934be4110cbaafa43f7db963a3850b5893f8ab872fc156f85"},
-    {"path": "../02-plan/fitness-functions.json", "sha256": "8a2de855c264a832ac17a47b99951e62cf49c4131747c89efca4931042058b58"},
-    {"path": "../02-plan/input-manifest.json", "sha256": "c093d673672ba1e0d86e195ba3a1e92abd50fde83320fe5c29942db68d3cef6b"}
+    {"path": "../02-plan/plan.md", "sha256": "a35f06c9b766c70a3da40bc504e3e38d1635c67a18c7a47ada142619d03251ca"},
+    {"path": "../02-plan/requirements.json", "sha256": "beaece8d466b3f19a479b0605ffb1efdd848eb2bbbd8943d9bcc4e30fcbf8db5"},
+    {"path": "../02-plan/fitness-functions.json", "sha256": "627b116eaf712905c257ef637ec1883337b5d78ab24fd04789bd3a15f43a74d7"},
+    {"path": "../02-plan/input-manifest.json", "sha256": "57249b313ce0b2e0659c93056bffda77e0faac036d6407f9d93d705aa7f5f7d4"}
   ],
   "requirements_addressed": [
     {
@@ -38,11 +39,29 @@
       "changed_paths": [
         "tests/instructions/test_instruction_routes.py"
       ]
+    },
+    {
+      "id": "PR3-P1-RENDERED-006",
+      "implementation": "Exclude HTML comments, fenced code blocks, and indented code blocks from active Markdown route extraction.",
+      "changed_paths": [
+        "scripts/verify_instruction_routes.py",
+        "tests/instructions/test_instruction_routes.py"
+      ]
+    },
+    {
+      "id": "PR3-P1-INTEGRITY-COMMAND-007",
+      "implementation": "Persist and qualify a deterministic repository-bound evidence-manifest SHA-256 verifier.",
+      "changed_paths": [
+        "scripts/verify_evidence_manifest.py",
+        "tests/evidence/test_verify_evidence_manifest.py"
+      ]
     }
   ],
   "changed_code_digests": [
-    {"path": "../../../../scripts/verify_instruction_routes.py", "sha256": "2584cfb3e771bfbc632823d3b950c0859dbf79d587456b9e749eecffa9a1abaf"},
-    {"path": "../../../../tests/instructions/test_instruction_routes.py", "sha256": "b2d08f27e33da3c05ab0321eefffd8eca99d90c4c2329e0bcfbcbde044ea6e5f"}
+    {"path": "../../../../scripts/verify_instruction_routes.py", "sha256": "fc876cd6d94533766e543e302e4f77da87e99286cd43ab89659e76393cbd7b8d"},
+    {"path": "../../../../scripts/verify_evidence_manifest.py", "sha256": "ee943aab51513797ad866341860e8bc69a7d26667726391e7d01c79f05e8d3ae"},
+    {"path": "../../../../tests/instructions/test_instruction_routes.py", "sha256": "c0467700e5cc1f911d74db4032255bf71f7be87939c121a6a17ffbfc6d38e647"},
+    {"path": "../../../../tests/evidence/test_verify_evidence_manifest.py", "sha256": "c094d5435428ce3d4785d9ee7c568e7c4cb21680fb482608fe510ebed39430b6"}
   ],
   "architecture_change": false,
   "dependency_change": false,

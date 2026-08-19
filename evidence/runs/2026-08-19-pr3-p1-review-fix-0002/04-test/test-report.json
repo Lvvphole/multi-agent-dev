@@ -2,8 +2,12 @@
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr3-p1-review-fix-0002",
   "tested_source_commit": "f9a8ba4cd7ad7dd53ce63b48d5bc35b64a040551",
-  "candidate_verdict": "PASS",
-  "independent_acceptance": "EXTERNAL_CODEX_REVIEW_REQUIRED",
+  "candidate_verdict": "BLOCKED",
+  "independent_acceptance": "BLOCKED",
+  "blocked_reasons": [
+    "Plan revision 2 was opened by P1 findings at review commit 47e903b2b68c8bb9315b54fd3be40b1121bd1dc1.",
+    "The revised Build and Test trajectory has not yet been bound in this intermediate state."
+  ],
   "requirements": [
     {
       "id": "PR3-P1-ABSOLUTE-003",
@@ -57,8 +61,8 @@
     "plan": "FROZEN_BY_HUMAN_DIRECTIVE",
     "build_candidate_commit": "830888e8f0c1db8bbbb745a021c9374b8a46d3b2",
     "build_handoff_commit": "f9a8ba4cd7ad7dd53ce63b48d5bc35b64a040551",
-    "test": "PASS",
-    "review": "EXTERNAL_CODEX_REVIEW_REQUIRED",
+    "test": "BLOCKED_PENDING_PLAN_REVISION_2",
+    "review": "BLOCKED",
     "human_merge": "REQUIRED"
   },
   "scope_limits": [

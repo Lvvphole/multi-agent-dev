@@ -5,7 +5,7 @@
   "checks": [
     {
       "id": "DEV-PY-COMPILE",
-      "command": "python3 -m py_compile scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
+      "command": "python3 -m py_compile scripts/verify_instruction_routes.py scripts/verify_evidence_manifest.py tests/instructions/test_instruction_routes.py tests/evidence/test_verify_evidence_manifest.py",
       "working_directory": "/workspace/scratch/568159e64489/repo_draft",
       "exit_status": 0
     },
@@ -21,11 +21,19 @@
       "working_directory": "/workspace/scratch/568159e64489/repo_draft",
       "exit_status": 0,
       "known_good_accepted": 1,
-      "known_bad_mutations_rejected": 18
+      "known_bad_mutations_rejected": 21
+    },
+    {
+      "id": "DEV-EVIDENCE-VERIFIER-QUALIFICATION",
+      "command": "python3 -m unittest discover -s tests/evidence -p 'test_*.py' -v",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "exit_status": 0,
+      "known_good_accepted": 1,
+      "known_bad_mutations_rejected": 6
     },
     {
       "id": "DEV-ENGINEERING-RULES",
-      "command": "python3 /root/.codex/skills/remote-skills/skill-6a7bbe3c89448191900ebcdd6395ac7c/scripts/check.py scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
+      "command": "python3 /root/.codex/skills/remote-skills/skill-6a7bbe3c89448191900ebcdd6395ac7c/scripts/check.py scripts/verify_instruction_routes.py scripts/verify_evidence_manifest.py tests/instructions/test_instruction_routes.py tests/evidence/test_verify_evidence_manifest.py",
       "working_directory": "/workspace/scratch/568159e64489/repo_draft",
       "exit_status": 0,
       "blocking_findings": 0,

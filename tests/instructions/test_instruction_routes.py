@@ -14,6 +14,28 @@ CHECKER_PATH = Path("scripts/verify_instruction_routes.py")
 
 
 class InstructionRouteCheckerTest(unittest.TestCase):
+    def hide_context_route_table(
+        self,
+        root: Path,
+        opening: str,
+        closing: str,
+    ) -> None:
+        contract = root / "AGENTS.md"
+        text = contract.read_text(encoding="utf-8")
+        first_line = "| Trigger | Required route |"
+        last_line = (
+            "| Scout, Plan, Build, Test, Review, sprint execution, or stage "
+            "promotion | [workflows/implementation/CONTEXT.md]"
+            "(workflows/implementation/CONTEXT.md) |"
+        )
+        start = text.index(first_line)
+        end = text.index(last_line, start) + len(last_line)
+        hidden_table = f"{opening}\n{text[start:end]}\n{closing}"
+        contract.write_text(
+            text[:start] + hidden_table + text[end:],
+            encoding="utf-8",
+        )
+
     def run_checker(self, root: Path) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [sys.executable, CHECKER_PATH.as_posix()],
@@ -205,6 +227,40 @@ class InstructionRouteCheckerTest(unittest.TestCase):
             )
 
         self.assert_rejected(mutate, "absolute route target in AGENTS.md")
+
+    def test_html_commented_route_table_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            self.hide_context_route_table(root, "<!--", "-->")
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_fenced_route_table_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            self.hide_context_route_table(root, "```markdown", "```")
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_indented_code_route_table_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            first_line = "| Trigger | Required route |"
+            last_line = (
+                "| Scout, Plan, Build, Test, Review, sprint execution, or stage "
+                "promotion | [workflows/implementation/CONTEXT.md]"
+                "(workflows/implementation/CONTEXT.md) |"
+            )
+            start = text.index(first_line)
+            end = text.index(last_line, start) + len(last_line)
+            indented_table = "\n".join(
+                f"    {line}" for line in text[start:end].splitlines()
+            )
+            contract.write_text(
+                text[:start] + indented_table + text[end:],
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
 
     def test_stage_order_change_is_rejected(self) -> None:
         def mutate(root: Path) -> None:

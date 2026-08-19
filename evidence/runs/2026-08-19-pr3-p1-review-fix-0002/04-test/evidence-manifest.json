@@ -109,14 +109,14 @@
     }
   ],
   "produced_artifacts": [
-    {"path": "test-report.json", "sha256": "eb143390c4993b3bd0ad56ad49ddc52246427d18bd4fba08934fa90cff24b102"},
+    {"path": "test-report.json", "sha256": "a5cecce78261d0da9c1787c6d9d4ac592150c9e6446246cc88d01b4261a80b18"},
     {"path": "raw/tool-versions.stdout.txt", "sha256": "61b82bc4012739ecd5807c30dbeedda987fbebd0a2dcaa1111c90bd3b3917d14"}
   ],
   "overall": {
-    "candidate_verdict": "PASS",
+    "candidate_verdict": "BLOCKED",
     "checker_qualification": "QUALIFIED_FOR_INSTRUCTION_ROUTING",
     "stage_continuity": "PASS",
-    "independent_code_review": "EXTERNAL_CODEX_REVIEW_REQUIRED",
+    "independent_code_review": "BLOCKED_PENDING_PLAN_REVISION_2",
     "human_merge": "REQUIRED"
   }
 }
