@@ -15,12 +15,29 @@ CONTEXT_NAME = "CONTEXT.md"
 ROOT_CONTRACT = ROOT / ROOT_CONTRACT_NAME
 ARCHITECTURE_REFERENCE = ROOT / "ARCHITECTURE.md"
 WORKFLOW_ROUTER = ROOT / "workflows" / "implementation" / CONTEXT_NAME
+BUSINESS_OPERATING_SPEC = (
+    ROOT / "docs" / "specs" / "problem-to-retained-revenue-operating-system.md"
+)
 EXPECTED_STAGES = (
     "01-scout",
     "02-plan",
     "03-build",
     "04-test",
     "05-review",
+)
+EXPECTED_BUSINESS_STAGES = (
+    "Objective Definition",
+    "Problem Scouting",
+    "Problem Validation",
+    "Gap Diagnosis",
+    "Solution Design",
+    "Distribution",
+    "Demand Generation",
+    "Behavioral Progression",
+    "Revenue",
+    "Implementation",
+    "Value Realization",
+    "Retention and Expansion",
 )
 REQUIRED_STAGE_HEADINGS = (
     "## Inputs",
@@ -30,13 +47,37 @@ REQUIRED_STAGE_HEADINGS = (
     "## Promotion",
 )
 REQUIRED_ROOT_MARKERS = (
+    "Problem-to-Retained-Revenue Operating System",
+    "software pipeline is a subordinate delivery capability",
     "MODEL != AUTHORITY",
     "TOOL AVAILABILITY != PERMISSION",
     "BLOCKED != PASS",
     "capabilityRuntime.invoke(...)",
     "Only the state-transition service may commit canonical enterprise state",
 )
+REQUIRED_BUSINESS_MARKERS = (
+    (
+        "The system has **12 operating stages**, numbered `0` through `11`",
+        "12-stage declaration",
+    ),
+    (
+        "Stage 5 Distribution\n  -> Stage 6 Demand Generation\n  -> Stage 7 Behavioral Progression",
+        "Distribution-to-Demand-Generation sequence",
+    ),
+    ("Stage 11 -> Stage 0 -> Stage 1", "normalized return path"),
+    (
+        "`CLOSED_EXIT`: the relationship was intentionally ended and learning "
+        "was captured. This closes the cycle but is not retained-revenue success.",
+        "closed-exit distinction",
+    ),
+    (
+        "The software factory cannot claim target behavior change, realized "
+        "client value, retained revenue, or expansion.",
+        "software-delivery boundary",
+    ),
+)
 LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+BUSINESS_STAGE_PATTERN = re.compile(r"^\| (\d+) \| ([^|]+?) \|", re.MULTILINE)
 
 
 def local_links(path: Path) -> list[Path]:
@@ -93,6 +134,28 @@ def main() -> int:
                     f"{target.relative_to(ROOT)}"
                 )
 
+    if not BUSINESS_OPERATING_SPEC.is_file():
+        errors.append(
+            f"missing business operating specification: "
+            f"{BUSINESS_OPERATING_SPEC.relative_to(ROOT)}"
+        )
+    else:
+        business_text = BUSINESS_OPERATING_SPEC.read_text(encoding="utf-8")
+        for marker, label in REQUIRED_BUSINESS_MARKERS:
+            if marker not in business_text:
+                errors.append(f"business operating specification missing: {label}")
+
+        actual_business_stages = tuple(
+            (int(number), name.strip())
+            for number, name in BUSINESS_STAGE_PATTERN.findall(business_text)
+        )
+        expected_business_stages = tuple(enumerate(EXPECTED_BUSINESS_STAGES))
+        if actual_business_stages != expected_business_stages:
+            errors.append(
+                "business stage order mismatch: "
+                f"expected {expected_business_stages}, got {actual_business_stages}"
+            )
+
     stages_root = ROOT / "workflows" / "implementation"
     actual_stages = tuple(
         sorted(
@@ -128,6 +191,7 @@ def main() -> int:
     print(f"root_contract={ROOT_CONTRACT_NAME}")
     print(f"root_lines={len(ROOT_CONTRACT.read_text(encoding='utf-8').splitlines())}")
     print(f"stages={','.join(EXPECTED_STAGES)}")
+    print(f"business_operating_stages={len(EXPECTED_BUSINESS_STAGES)}")
     return 0
 
 

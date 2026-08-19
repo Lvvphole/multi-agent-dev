@@ -4,7 +4,9 @@ This file is the routed design reference. `AGENTS.md` remains the authoritative 
 
 ## System objective
 
-Build a governed multi-agent software factory that turns a human-authorized task into a tested, independently reviewed change without allowing a model, tool, memory record, or organizational title to become authority.
+Build a governed multi-agent organization that implements the [Problem-to-Retained-Revenue Operating System](docs/specs/problem-to-retained-revenue-operating-system.md): repeatedly create, deliver, verify, and retain economically sustainable client value while returning evidence and learning to the next operating cycle.
+
+The software factory is one subordinate delivery capability. It turns a human-authorized software task into a bounded, tested, independently reviewed merge decision without allowing a model, tool, memory record, or organizational title to become authority. A merge candidate is an intervention artifact, not proof of realized client value.
 
 ## Governance order
 
@@ -45,6 +47,8 @@ Scout -> Plan -> Build -> Test -> Review -> human merge
 ```
 
 Each named actor is a distinct principal. Handoffs use immutable artifacts and governed A2A envelopes. Test and Review remain independent of Build for consequential acceptance.
+
+When software is part of an intervention, this trajectory returns `MERGE_READY | DO_NOT_MERGE | BLOCKED` and its evidence to the applicable business value cycle. Only post-implementation observation can establish target behavior change, realized client value, retention, or expansion.
 
 ## Privileged action trajectory
 
@@ -117,4 +121,7 @@ ICM structures the repository-development workflow and its context artifacts. It
 
 Runtime evidence may invalidate an assumption and trigger a controlled architecture proposal. No agent may silently revise this design. Architecture changes require an ADR, affected fitness-function updates, independent verification, and human merge approval.
 
-Decision rationale: [ADR-0001 - Authoritative AGENTS.md with ICM context routing](docs/adr/0001-authoritative-agents-and-icm-routing.md).
+Decision rationale:
+
+- [ADR-0001 - Authoritative AGENTS.md with ICM context routing](docs/adr/0001-authoritative-agents-and-icm-routing.md)
+- [ADR-0002 - Problem-to-Retained-Revenue organizational objective](docs/adr/0002-problem-to-retained-revenue-organizational-objective.md)

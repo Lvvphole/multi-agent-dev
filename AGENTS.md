@@ -14,9 +14,11 @@ Scope: the entire repository.
 
 ## Mission
 
-Implement the locked multi-agent software factory and enterprise control architecture through small, evidence-bearing changes.
+Implement the locked enterprise architecture for the Problem-to-Retained-Revenue Operating System through small, evidence-bearing changes.
 
-The durable software-factory actors are Scout, Plan, Build, Test, and Review. Each actor is an isolated computational principal with its own sandbox, runtime identity, scoped context, authority, budget, and evidence trajectory.
+The organization exists to repeatedly create, deliver, verify, and retain economically sustainable client value. It must produce both realized client value and sustainable retained revenue, then return evidence and learning to the next operating cycle.
+
+The Scout, Plan, Build, Test, and Review software pipeline is a subordinate delivery capability. A tested and reviewed merge candidate is a verified intervention artifact; it is not proof of realized client value. Each actor is an isolated computational principal with its own sandbox, runtime identity, scoped context, authority, budget, and evidence trajectory.
 
 ## Canonical commands
 
@@ -68,6 +70,7 @@ Load Layers 0-2 for the selected task, then only the Layer 3 and Layer 4 files e
 | Destructive action, safety constraint, approval, reversibility, or escalation | [authority/SAFETY.md](authority/SAFETY.md) |
 | Context, retrieval, durable memory, provenance, freshness, or inheritance | [authority/MEMORY.md](authority/MEMORY.md) |
 | Tests, checkers, evidence, acceptance, completion, or release claims | [authority/VERIFICATION.md](authority/VERIFICATION.md) |
+| Enterprise goal, client state, customer gap, value cycle, revenue, retention, business stage, or operating metric | [docs/specs/problem-to-retained-revenue-operating-system.md](docs/specs/problem-to-retained-revenue-operating-system.md) |
 | Scout, Plan, Build, Test, Review, sprint execution, or stage promotion | [workflows/implementation/CONTEXT.md](workflows/implementation/CONTEXT.md) |
 
 When several triggers apply, load every applicable route. A route selects context; it does not grant permission.

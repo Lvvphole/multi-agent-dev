@@ -92,6 +92,82 @@ class InstructionRouteCheckerTest(unittest.TestCase):
 
         self.assert_rejected(mutate, "missing invariant: MODEL != AUTHORITY")
 
+    def test_business_stage_change_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            specification = (
+                root
+                / "docs"
+                / "specs"
+                / "problem-to-retained-revenue-operating-system.md"
+            )
+            text = specification.read_text(encoding="utf-8")
+            specification.write_text(
+                text.replace(
+                    "| 6 | Demand Generation |",
+                    "| 6 | Lead Generation |",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "business stage order mismatch")
+
+    def test_business_return_path_change_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            specification = (
+                root
+                / "docs"
+                / "specs"
+                / "problem-to-retained-revenue-operating-system.md"
+            )
+            text = specification.read_text(encoding="utf-8")
+            specification.write_text(
+                text.replace("Stage 11 -> Stage 0 -> Stage 1", "Stage 11 -> Stage 1"),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "missing: normalized return path")
+
+    def test_closed_exit_success_conflation_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            specification = (
+                root
+                / "docs"
+                / "specs"
+                / "problem-to-retained-revenue-operating-system.md"
+            )
+            text = specification.read_text(encoding="utf-8")
+            specification.write_text(
+                text.replace(
+                    "This closes the cycle but is not retained-revenue success.",
+                    "This closes the cycle as retained-revenue success.",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "missing: closed-exit distinction")
+
+    def test_software_value_overclaim_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            specification = (
+                root
+                / "docs"
+                / "specs"
+                / "problem-to-retained-revenue-operating-system.md"
+            )
+            text = specification.read_text(encoding="utf-8")
+            specification.write_text(
+                text.replace(
+                    "cannot claim target behavior change",
+                    "can claim target behavior change",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "missing: software-delivery boundary")
+
 
 if __name__ == "__main__":
     unittest.main()
