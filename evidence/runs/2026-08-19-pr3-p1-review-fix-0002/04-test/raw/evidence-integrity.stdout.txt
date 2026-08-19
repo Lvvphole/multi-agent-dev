@@ -1,0 +1,5 @@
+start_utc=2026-08-19T04:02:48Z
+checked_artifacts=19
+EVIDENCE_INTEGRITY: PASS
+end_utc=2026-08-19T04:02:48Z
+exit_status=0

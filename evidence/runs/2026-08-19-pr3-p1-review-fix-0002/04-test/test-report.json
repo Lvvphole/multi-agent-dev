@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr3-p1-review-fix-0002",
+  "tested_source_commit": "f9a8ba4cd7ad7dd53ce63b48d5bc35b64a040551",
+  "candidate_verdict": "PASS",
+  "independent_acceptance": "EXTERNAL_CODEX_REVIEW_REQUIRED",
+  "requirements": [
+    {
+      "id": "PR3-P1-ABSOLUTE-003",
+      "verdict": "PASS",
+      "evidence": [
+        "test_absolute_posix_route_is_rejected",
+        "test_absolute_windows_route_is_rejected",
+        "test_out_of_repository_route_is_rejected"
+      ]
+    },
+    {
+      "id": "PR3-P1-CONTINUITY-004",
+      "verdict": "PASS",
+      "evidence": [
+        "historical run 0001 candidate_verdict=BLOCKED",
+        "01-scout/findings.md and source-manifest.json",
+        "02-plan frozen artifacts",
+        "03-build/change-manifest.json frozen_plan_inputs",
+        "raw/stage-continuity.stdout.txt"
+      ]
+    },
+    {
+      "id": "PR3-REGRESSION-005",
+      "verdict": "PASS",
+      "evidence": [
+        "INSTRUCTION_ROUTING: PASS",
+        "19/19 qualification tests PASS",
+        "engineering rules: 0 blocking and 0 review findings"
+      ]
+    }
+  ],
+  "checks": [
+    {"id": "PY-COMPILE", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/python-compile.stdout.txt"},
+    {"id": "INSTRUCTION-ROUTING", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/instruction-route-check.stdout.txt"},
+    {"id": "CHECKER-QUALIFICATION", "verdict": "PASS", "exit_status": 0, "known_good_accepted": 1, "known_bad_mutations_rejected": 18, "raw_output": "raw/instruction-checker-qualification.stdout.txt"},
+    {"id": "ENGINEERING-RULES", "verdict": "PASS", "exit_status": 0, "blocking_findings": 0, "review_findings": 0, "raw_output": "raw/engineering-rules.stdout.txt"},
+    {"id": "STAGE-CONTINUITY", "verdict": "PASS", "exit_status": 0, "checked_predecessor_artifacts": 11, "raw_output": "raw/stage-continuity.stdout.txt"},
+    {"id": "EVIDENCE-INTEGRITY", "verdict": "PASS", "exit_status": 0, "checked_artifacts": 19, "raw_output": "raw/evidence-integrity.stdout.txt"}
+  ],
+  "checker_qualification": {
+    "known_good_accepted": 1,
+    "known_bad_mutations_rejected": 18,
+    "new_required_mutations_rejected": [
+      "POSIX absolute route target inside the current checkout",
+      "Windows absolute route target"
+    ],
+    "qualification_state": "QUALIFIED_FOR_INSTRUCTION_ROUTING"
+  },
+  "trajectory": {
+    "scout": "ACCEPTED_SCOPE_BY_HUMAN_DIRECTIVE",
+    "plan": "FROZEN_BY_HUMAN_DIRECTIVE",
+    "build_candidate_commit": "830888e8f0c1db8bbbb745a021c9374b8a46d3b2",
+    "build_handoff_commit": "f9a8ba4cd7ad7dd53ce63b48d5bc35b64a040551",
+    "test": "PASS",
+    "review": "EXTERNAL_CODEX_REVIEW_REQUIRED",
+    "human_merge": "REQUIRED"
+  },
+  "scope_limits": [
+    "This producer-executed Test result does not replace independent Codex review.",
+    "This result does not authorize merge or activation.",
+    "External Codex review must report no major issues before completion is claimed."
+  ]
+}

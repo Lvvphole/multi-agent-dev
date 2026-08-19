@@ -1,0 +1,29 @@
+start_utc=2026-08-19T04:00:01Z
+GATES — 2 file(s), 0 blocking, 0 to review
+
+  no mechanical violations found
+
+CHECKLIST — 15 rule(s) in scope (python)
+  Answer each with file:line evidence. The proposer does not
+  accept its own answers (AE-002).
+
+  [ ] REQ-001  Every behavior change traces to an authorized task, not to your own idea of useful.
+  [ ] REQ-005  Nothing added is gold-plating or an unrequested implementation constraint.
+  [ ] REQ-006  Unresolved information is marked unresolved rather than guessed.
+  [ ] REQ-007  Traceability runs from source through implementation to evidence.
+  [ ] SC-001  The authorized contract is satisfied before any stylistic improvement.
+  [ ] SC-002  This is the smallest sufficient change — no speculative abstraction or dependency.
+  [ ] SC-003  No design decision leaks across a module boundary.
+  [ ] SC-004  Names are intention-revealing, and one concept keeps one name.
+  [ ] SC-005  Each unit sits at one coherent level of abstraction.
+  [ ] SC-007  Comments explain non-obvious intent, not what the code plainly says.
+  [ ] RT-004  Changed behavior is verified against the observable contract, not internals.
+  [ ] RT-008  Boundaries and failure partitions are exercised, not just the normal path.
+  [ ] RT-009  Adequacy rests on behavior-specific evidence, not a coverage number.
+  [ ] AD-004  Compatibility is preserved or an explicit migration exists.
+  [ ] PY-002  Contractual exceptions are documented; type facts are not duplicated in docstrings.
+
+Gates passing means the mechanical checks found nothing. It is not
+proof of correctness and does not convert to a score (RT-009).
+end_utc=2026-08-19T04:00:01Z
+exit_status=0
