@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr1-p1-review-fix-0001",
   "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
-  "tested_candidate_commit": "PENDING_PUBLICATION",
+  "tested_candidate_commit": "ddf889396f3bbe7e60126a545d84d31cf376e289",
   "candidate_verdict": "PASS",
   "independent_acceptance": "PENDING_CODEX_REVIEW",
   "requirements": [

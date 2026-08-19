@@ -3,7 +3,7 @@
   "run_id": "2026-08-19-pr1-p1-review-fix-0001",
   "repository": "Lvvphole/multi-agent-dev",
   "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
-  "tested_candidate_commit": "PENDING_PUBLICATION",
+  "tested_candidate_commit": "ddf889396f3bbe7e60126a545d84d31cf376e289",
   "working_directory": "/workspace/scratch/568159e64489/repo_draft",
   "toolchain": {
     "python": "CPython 3.12.13",
