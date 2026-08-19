@@ -1,0 +1,18 @@
+start_utc=2026-08-19T02:58:27Z
+test_broken_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_broken_route_is_rejected) ... ok
+test_business_return_path_change_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_business_return_path_change_is_rejected) ... ok
+test_business_stage_change_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_business_stage_change_is_rejected) ... ok
+test_closed_exit_success_conflation_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_closed_exit_success_conflation_is_rejected) ... ok
+test_known_good_repository_is_accepted (test_instruction_routes.InstructionRouteCheckerTest.test_known_good_repository_is_accepted) ... ok
+test_missing_root_invariant_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_missing_root_invariant_is_rejected) ... ok
+test_missing_stage_heading_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_missing_stage_heading_is_rejected) ... ok
+test_nested_instruction_file_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_nested_instruction_file_is_rejected) ... ok
+test_software_value_overclaim_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_software_value_overclaim_is_rejected) ... ok
+test_stage_order_change_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_stage_order_change_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.241s
+
+OK
+end_utc=2026-08-19T02:58:27Z
+exit_status=0

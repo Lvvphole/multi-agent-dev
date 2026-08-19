@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-foundation-plan-0001",
+  "repository": "Lvvphole/multi-agent-dev",
+  "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
+  "requested_outcome": "A tested, evidence-bearing candidate plan for the next foundation slice, with the plan or implementation blocked whenever required qualification, evidence, architecture, or human decisions are unavailable.",
+  "plan_decision": {
+    "candidate_status": "TESTED_CANDIDATE_PENDING_EXECUTION_EVIDENCE",
+    "implementation_gate": "BLOCKED",
+    "acceptance_authority": "Lvvphole",
+    "reason": "The foundation direction can be structurally tested, but architecture ownership, domain measurement policy, independent verification, and human Plan acceptance are unresolved."
+  },
+  "business_slice": {
+    "name": "Objective-to-Verified-Problem Foundation",
+    "stages": [
+      {
+        "number": 0,
+        "name": "Objective Definition",
+        "required_fields": ["Goal", "Current State", "Desired State", "Definition of Done", "Objective Function", "Constraints"],
+        "exit_condition": "All required fields are resolved, admitted, and approved."
+      },
+      {
+        "number": 1,
+        "name": "Problem Scouting",
+        "required_output": "Candidate Problem",
+        "exit_condition": "An attributable candidate problem exists; it is not represented as a verified opportunity or solution."
+      },
+      {
+        "number": 2,
+        "name": "Problem Validation",
+        "validation_gates": ["Real", "Unsatisfied", "Consequential", "Reachable", "Solvable"],
+        "exit_condition": "Every gate is true under an approved measurement policy with admitted external evidence."
+      }
+    ],
+    "allowed_outcomes": ["VERIFIED_PROBLEM", "REJECTED_TO_SCOUTING", "BLOCKED"],
+    "forbidden_progression": "Stage 3 Gap Diagnosis or any later business stage"
+  },
+  "common_operating_record_fields": [
+    "Goal",
+    "Current State",
+    "Desired State",
+    "Gap",
+    "Limitation",
+    "Verified Need",
+    "Target Behavior",
+    "Constraint",
+    "Intervention",
+    "Expected Effect",
+    "Evidence",
+    "Buyer State",
+    "Economic State",
+    "Actual Outcome",
+    "Value State",
+    "Retention State",
+    "Learning"
+  ],
+  "status_namespaces": {
+    "verification_verdicts": ["PASS", "FAIL", "BLOCKED"],
+    "value_cycle_states": ["CLOSED_SUCCESS", "CLOSED_EXIT", "BLOCKED", "FAIL", "CANCELLED"],
+    "software_delivery_outputs": ["MERGE_READY", "DO_NOT_MERGE", "BLOCKED"]
+  },
+  "change_scope": {
+    "production_changes_allowed": false,
+    "allowed_path_patterns": [
+      "evidence/runs/2026-08-19-foundation-plan-0001/**",
+      "scripts/verify_foundation_plan.py",
+      "tests/plans/test_foundation_plan_checker.py"
+    ],
+    "forbidden_artifact_classes": [
+      "runtime contract implementation",
+      "agent implementation",
+      "capability implementation",
+      "state persistence",
+      "queue or orchestration implementation",
+      "deployment configuration"
+    ],
+    "rollback": "Close the planning pull request or revert its planning-only commit; no runtime state or external system is changed."
+  },
+  "unresolved_decisions": [
+    {
+      "id": "DEC-PTRR-001",
+      "question": "Which locked repository package owns the sole state-transition service, and what are its public proposal and private commit boundaries?",
+      "decision_authority": "Lvvphole",
+      "required_evidence": "Merged ADR and architecture fitness review",
+      "status": "UNRESOLVED",
+      "blocks": "BUILD"
+    },
+    {
+      "id": "DEC-PTRR-002",
+      "question": "What persistence and transaction boundary implements canonical state, revision vectors, compare-and-set, and idempotent replay?",
+      "decision_authority": "Lvvphole",
+      "required_evidence": "Merged ADR naming the technology, ownership, transaction model, and rollback strategy",
+      "status": "UNRESOLVED",
+      "blocks": "BUILD"
+    },
+    {
+      "id": "DEC-PTRR-003",
+      "question": "What is the first client domain and its approved units, comparison functions, five validation thresholds, evidence sources, uncertainty policy, and risk tolerance?",
+      "decision_authority": "Lvvphole or explicitly delegated domain authority",
+      "required_evidence": "Approved domain measurement and evidence-admission policy",
+      "status": "UNRESOLVED",
+      "blocks": "BUILD"
+    },
+    {
+      "id": "DEC-PTRR-004",
+      "question": "Which principal or human is independent acceptance verifier, and how is that verifier qualified?",
+      "decision_authority": "Lvvphole",
+      "required_evidence": "Verifier identity, authority scope, qualification record, and independence check",
+      "status": "UNRESOLVED",
+      "blocks": "PROMOTION"
+    },
+    {
+      "id": "DEC-PTRR-005",
+      "question": "What attempt, elapsed-time, cost, throughput, and latency budgets apply to the future transition path?",
+      "decision_authority": "Lvvphole or explicitly delegated architecture authority",
+      "required_evidence": "Approved resource and retry budget with objective measurement commands",
+      "status": "UNRESOLVED",
+      "blocks": "BUILD"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "evidence/runs/2026-08-19-foundation-plan-0001/01-scout/findings.md",
+      "identity": "sha256:31445a339fbe98f9c0bcb382f59c555862e1cb52c199d7e2ec1dafe07953245d",
+      "role": "accepted Scout findings"
+    },
+    {
+      "path": "evidence/runs/2026-08-19-foundation-plan-0001/01-scout/source-manifest.json",
+      "identity": "sha256:79da528271f25fb830f9c47bbad29da174bff0c45877000b7c36ddea4f887a1a",
+      "role": "source bindings"
+    },
+    {
+      "path": "evidence/runs/2026-08-19-foundation-plan-0001/02-plan/requirements.json",
+      "identity": "sha256:454bf7178961ffa11fb4d7c97684dc481acdf04220d2c2bc2cf6514225733a7b",
+      "role": "future implementation requirements"
+    },
+    {
+      "path": "evidence/runs/2026-08-19-foundation-plan-0001/02-plan/fitness-functions.json",
+      "identity": "sha256:f866c9722b439eb67d1c4030e070fbf1ee5409bd9a9f68495ac4a881cd75ae1c",
+      "role": "future implementation fitness and manual gates"
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "ASM-PTRR-001",
+      "statement": "The merged commit is the current accepted repository baseline.",
+      "status": "SUPPORTED",
+      "evidence": "GitHub commit 85e577c2e10283a9c0b4c5291eb594e6e504f148"
+    },
+    {
+      "id": "ASM-PTRR-002",
+      "statement": "The first foundation can be specified without choosing a model or autonomous agent topology.",
+      "status": "TO_BE_FALSIFIED_BY_IMPLEMENTATION",
+      "evidence": "Contract-first plan and FF-PTRR-021"
+    }
+  ]
+}

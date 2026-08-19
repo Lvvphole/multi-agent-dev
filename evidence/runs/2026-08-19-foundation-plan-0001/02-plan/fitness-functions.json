@@ -1,0 +1,449 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-foundation-plan-0001",
+  "artifact_status": "CANDIDATE",
+  "design_rule": "Fitness functions are independent acceptance predicates, not one compensating composite score.",
+  "functions": [
+    {
+      "id": "FF-PTRR-001",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-003"],
+      "characteristic": "semantic completeness",
+      "scope": "common operating-record schema",
+      "trigger": "every schema change and full gate",
+      "predicate": "Schema introspection yields exactly the 17 approved semantic fields with no rename or duplicate.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "schema field inventory and mutation test", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["schema digest", "field inventory", "raw mutation output"],
+      "owner": "Test principal",
+      "failure_action": "FAIL and reject change",
+      "negative_controls": [
+        {"id": "NC-FF-001-A", "mutation": "remove Learning", "expected": "reject"},
+        {"id": "NC-FF-001-B", "mutation": "rename Current State", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-002",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-004", "PTRR-FND-013"],
+      "characteristic": "semantic namespace isolation",
+      "scope": "business stages, delivery stages, verification verdicts, and business statuses",
+      "trigger": "every boundary-schema change",
+      "predicate": "The four namespaces are separately typed and cross-domain assignments fail validation.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "type inventory and cross-assignment tests", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["type inventory", "cross-assignment results"],
+      "owner": "Test principal",
+      "failure_action": "FAIL and reject change",
+      "negative_controls": [
+        {"id": "NC-FF-002-A", "mutation": "assign delivery Scout to business stage", "expected": "reject"},
+        {"id": "NC-FF-002-B", "mutation": "coerce verification PASS to CLOSED_SUCCESS", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-003",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-001"],
+      "characteristic": "bounded change",
+      "scope": "Stage 0 through Stage 2 transition graph",
+      "trigger": "every transition-rule change",
+      "predicate": "The graph contains only the approved foundation stages and exits and has no edge to Stage 3 or later.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "serialized graph conformance test", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["graph serialization", "edge inventory", "negative edge result"],
+      "owner": "Test principal",
+      "failure_action": "FAIL and reject change",
+      "negative_controls": [
+        {"id": "NC-FF-003-A", "mutation": "add Stage 2 to Stage 3 edge", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-004",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-002", "PTRR-FND-014"],
+      "characteristic": "objective completeness and fail-closed progression",
+      "scope": "Stage 0 objective contract",
+      "trigger": "every Stage 0 proposal",
+      "predicate": "All six objective fields are resolved and admitted; otherwise the result is BLOCKED and state is unchanged.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "six field-removal mutations and one known-good", "dependency": "MG-PTRR-002"},
+      "evidence_contract": ["fixture digests", "verdicts", "before-and-after state digests"],
+      "owner": "Test principal",
+      "failure_action": "FAIL if an invalid proposal progresses; BLOCKED if policy is missing",
+      "negative_controls": [
+        {"id": "NC-FF-004-A", "mutation": "remove objective function", "expected": "BLOCKED with no mutation"},
+        {"id": "NC-FF-004-B", "mutation": "leave constraints unresolved", "expected": "BLOCKED with no mutation"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-005",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-005", "PTRR-FND-007"],
+      "characteristic": "problem-first discovery",
+      "scope": "Stage 1 candidate-problem proposal",
+      "trigger": "every Stage 1 proposal",
+      "predicate": "The proposal identifies a candidate client problem and does not use a preferred intervention as validation evidence.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "candidate known-good and solution-first negative", "dependency": "MG-PTRR-002"},
+      "evidence_contract": ["candidate record", "solution-first negative result", "audit trace"],
+      "owner": "Test principal",
+      "failure_action": "FAIL and return to scouting",
+      "negative_controls": [
+        {"id": "NC-FF-005-A", "mutation": "supply only a product assertion", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-006",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-006", "PTRR-FND-019"],
+      "characteristic": "problem-validation integrity",
+      "scope": "Stage 2 five-gate conjunction",
+      "trigger": "every Stage 2 proposal",
+      "predicate": "Real, Unsatisfied, Consequential, Reachable, and Solvable are each true under the approved measurement policy.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "five false and five missing single-gate mutations", "dependency": "MG-PTRR-002"},
+      "evidence_contract": ["policy digest", "gate evidence", "ten mutation results"],
+      "owner": "Domain verifier and Test principal",
+      "failure_action": "return REJECTED_TO_SCOUTING for disproven gate; BLOCKED for missing policy or evidence",
+      "negative_controls": [
+        {"id": "NC-FF-006-A", "mutation": "set Reachable false", "expected": "REJECTED_TO_SCOUTING"},
+        {"id": "NC-FF-006-B", "mutation": "remove Solvable evidence", "expected": "BLOCKED"},
+        {"id": "NC-FF-006-C", "mutation": "compare incompatible consequence units", "expected": "BLOCKED"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-007",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-007", "PTRR-FND-011", "PTRR-FND-014"],
+      "characteristic": "evidence-based progression",
+      "scope": "all foundation-stage exit conditions",
+      "trigger": "every transition proposal",
+      "predicate": "Only admitted, attributable, fresh, state-relative external evidence can satisfy an exit condition.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "proxy, provenance, freshness, and revision mutation suite", "dependency": "MG-PTRR-002"},
+      "evidence_contract": ["evidence objects", "admission decisions", "state digests"],
+      "owner": "Test principal",
+      "failure_action": "FAIL on false acceptance; BLOCKED on missing admissible evidence",
+      "negative_controls": [
+        {"id": "NC-FF-007-A", "mutation": "use discovery-call completion as proof", "expected": "reject"},
+        {"id": "NC-FF-007-B", "mutation": "use model claim with no external source", "expected": "reject"},
+        {"id": "NC-FF-007-C", "mutation": "use evidence from a stale revision", "expected": "BLOCKED"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-008",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-008", "PTRR-FND-015"],
+      "characteristic": "single-writer canonical state",
+      "scope": "canonical state mutation boundary",
+      "trigger": "every code or dependency change touching state",
+      "predicate": "Only the state-transition service has a canonical write dependency; all other principals and components expose proposal-only paths.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "dependency rule plus direct-write integration negatives", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["dependency graph", "write-path inventory", "direct-write results"],
+      "owner": "Architecture verifier",
+      "failure_action": "FAIL and reject change",
+      "negative_controls": [
+        {"id": "NC-FF-008-A", "mutation": "add agent-to-state write import", "expected": "reject"},
+        {"id": "NC-FF-008-B", "mutation": "add verifier direct commit", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-009",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-009"],
+      "characteristic": "concurrency safety",
+      "scope": "canonical state compare-and-set",
+      "trigger": "every state commit and state-service change",
+      "predicate": "A commit succeeds only against the applicable current revision vector and is idempotent under replay.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "current, stale, conflicting, and replayed revision fixtures", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["revision vectors", "commit outcomes", "state digests"],
+      "owner": "Test principal",
+      "failure_action": "FAIL on stale acceptance; BLOCKED or conflict on rejected commit",
+      "negative_controls": [
+        {"id": "NC-FF-009-A", "mutation": "commit with stale revision", "expected": "reject without mutation"},
+        {"id": "NC-FF-009-B", "mutation": "replay accepted commit", "expected": "no duplicate mutation"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-010",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-010", "PTRR-FND-014", "PTRR-FND-015"],
+      "characteristic": "least authority",
+      "scope": "Action Gate and canonical commit capability",
+      "trigger": "every privileged invocation and authority-policy change",
+      "predicate": "Effective authority is present, fresh, principal-bound, action-scoped, and no broader than policy and task need.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "authority-envelope mutation suite", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["redacted envelope digest", "admission trace", "unchanged-state digests"],
+      "owner": "Security verifier",
+      "failure_action": "BLOCKED and deny",
+      "negative_controls": [
+        {"id": "NC-FF-010-A", "mutation": "omit authority envelope", "expected": "deny"},
+        {"id": "NC-FF-010-B", "mutation": "use expired grant", "expected": "deny"},
+        {"id": "NC-FF-010-C", "mutation": "claim permission in state data", "expected": "deny"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-011",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-011", "PTRR-FND-018"],
+      "characteristic": "evidence integrity and reproducibility",
+      "scope": "evidence object and run evidence schemas",
+      "trigger": "every evidence-schema or checker change",
+      "predicate": "All required provenance, time, scope, state, identity, execution, and digest fields are present and their references validate.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "schema field mutations and digest validation", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["schema inventory", "manifest validation", "mutation results"],
+      "owner": "Test principal",
+      "failure_action": "BLOCKED because evidence is inadmissible",
+      "negative_controls": [
+        {"id": "NC-FF-011-A", "mutation": "remove applicable state revision", "expected": "reject"},
+        {"id": "NC-FF-011-B", "mutation": "alter referenced raw output after digest", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-012",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-012"],
+      "characteristic": "independent verification",
+      "scope": "transition producer and verifier identities",
+      "trigger": "every consequential verification",
+      "predicate": "Producer principal ID differs from qualified verifier principal ID and both identities are active and authorized for their separate roles.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "same-principal and inactive-principal negatives", "dependency": "MG-PTRR-003"},
+      "evidence_contract": ["principal identities", "qualification records", "verification trace"],
+      "owner": "Review principal",
+      "failure_action": "BLOCKED",
+      "negative_controls": [
+        {"id": "NC-FF-012-A", "mutation": "producer verifies its own proposal", "expected": "BLOCKED"},
+        {"id": "NC-FF-012-B", "mutation": "use unqualified verifier", "expected": "BLOCKED"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-013",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-013"],
+      "characteristic": "verdict integrity",
+      "scope": "verification, business-cycle, and software-delivery results",
+      "trigger": "every result-schema change",
+      "predicate": "Result namespaces remain distinct and BLOCKED is never accepted or converted to success.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "enum coercion and BLOCKED acceptance mutations", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["enum inventory", "coercion results", "BLOCKED result trace"],
+      "owner": "Test principal",
+      "failure_action": "FAIL and reject change",
+      "negative_controls": [
+        {"id": "NC-FF-013-A", "mutation": "treat BLOCKED as truthy PASS", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-014",
+      "kind": "holistic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-014"],
+      "characteristic": "fail-closed system behavior",
+      "scope": "foundation transition pipeline",
+      "trigger": "full gate and every admission-policy change",
+      "predicate": "Each uncertainty class terminates as BLOCKED with no canonical mutation and no downstream dispatch.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "end-to-end uncertainty matrix", "dependency": "MG-PTRR-003"},
+      "evidence_contract": ["uncertainty matrix", "state snapshots", "dispatch traces"],
+      "owner": "Independent Test principal",
+      "failure_action": "FAIL and reject change",
+      "negative_controls": [
+        {"id": "NC-FF-014-A", "mutation": "suppress verifier qualification", "expected": "BLOCKED with no dispatch"},
+        {"id": "NC-FF-014-B", "mutation": "remove domain threshold", "expected": "BLOCKED with no mutation"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-015",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-015"],
+      "characteristic": "state-memory-authority separation",
+      "scope": "module dependencies and admission behavior",
+      "trigger": "every state, memory, or authority change",
+      "predicate": "No dependency or runtime path converts memory content or state projection into authority or canonical write access.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "dependency policy and claiming-record negatives", "dependency": "MG-PTRR-001"},
+      "evidence_contract": ["dependency graph", "negative fixture traces"],
+      "owner": "Security verifier",
+      "failure_action": "FAIL and reject change",
+      "negative_controls": [
+        {"id": "NC-FF-015-A", "mutation": "memory record declares admin authority", "expected": "ignore and deny"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-016",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-016"],
+      "characteristic": "interpretable context routing",
+      "scope": "software-delivery run folders and stage contracts",
+      "trigger": "every route, stage, or run-artifact change",
+      "predicate": "Each stage has declared non-overlapping Markdown or JSON inputs and outputs, and stable references are separate from run artifacts.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "route and artifact-boundary checker", "dependency": "MG-PTRR-004"},
+      "evidence_contract": ["route inventory", "path-overlap result", "JSON parse report"],
+      "owner": "Test principal",
+      "failure_action": "FAIL and reject change",
+      "negative_controls": [
+        {"id": "NC-FF-016-A", "mutation": "make Plan write a Build output", "expected": "reject"},
+        {"id": "NC-FF-016-B", "mutation": "place run evidence in stable authority path", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-017",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-017"],
+      "characteristic": "checker sensitivity",
+      "scope": "every critical checker",
+      "trigger": "checker implementation, fixture, or dependency change",
+      "predicate": "The checker accepts its independent known-good and rejects every declared known-bad mutation.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "checker-specific qualification suite", "dependency": "MG-PTRR-003"},
+      "evidence_contract": ["checker digest", "fixture digests", "raw qualification output", "qualification verdict"],
+      "owner": "Review principal",
+      "failure_action": "mark checker UNQUALIFIED and dependent result BLOCKED",
+      "negative_controls": [
+        {"id": "NC-FF-017-A", "mutation": "force checker to accept a required negative", "expected": "qualification fails"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-018",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-018"],
+      "characteristic": "run evidence completeness",
+      "scope": "verification evidence manifest",
+      "trigger": "every reported check",
+      "predicate": "The manifest contains every required execution fact and every referenced artifact exists with the recorded digest.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "evidence-manifest schema and digest checker", "dependency": "MG-PTRR-003"},
+      "evidence_contract": ["validated manifest", "raw streams", "digest report"],
+      "owner": "Test principal",
+      "failure_action": "BLOCKED",
+      "negative_controls": [
+        {"id": "NC-FF-018-A", "mutation": "remove command working directory", "expected": "reject"},
+        {"id": "NC-FF-018-B", "mutation": "tamper with stdout", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-019",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-020"],
+      "characteristic": "incremental blast-radius control",
+      "scope": "foundation implementation diff and dependencies",
+      "trigger": "every foundation pull request",
+      "predicate": "No durable agent, queue, model invocation, external-effect capability, or deployment behavior is added before the domain kernel qualifies.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "changed-path and dependency scan", "dependency": "MG-PTRR-004"},
+      "evidence_contract": ["changed paths", "dependency report", "scope review"],
+      "owner": "Review principal",
+      "failure_action": "FAIL and split or reject change",
+      "negative_controls": [
+        {"id": "NC-FF-019-A", "mutation": "add model invocation to foundation slice", "expected": "reject"},
+        {"id": "NC-FF-019-B", "mutation": "add queue dependency", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-020",
+      "kind": "atomic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-021", "PTRR-FND-022"],
+      "characteristic": "plan integrity and planning-only scope",
+      "scope": "this Plan-stage artifact set and pull-request paths",
+      "trigger": "every change to this plan or its checker",
+      "predicate": "The plan is source-bound, completely covered, explicit about blockers, qualified by negative controls, and the current diff is planning-only.",
+      "implementation": {"status": "IMPLEMENTED_FOR_PLAN", "planned_test": "python3 scripts/verify_foundation_plan.py --run-root evidence/runs/2026-08-19-foundation-plan-0001", "dependency": "none"},
+      "evidence_contract": ["checker output", "qualification output", "changed-path inventory", "checker digest"],
+      "owner": "Plan producer for candidate check; independent Review required for acceptance",
+      "failure_action": "FAIL for a disproven predicate; BLOCKED if evidence or independent review is unavailable",
+      "negative_controls": [
+        {"id": "NC-FF-020-A", "mutation": "remove a source binding", "expected": "reject"},
+        {"id": "NC-FF-020-B", "mutation": "leave a requirement uncovered", "expected": "reject"},
+        {"id": "NC-FF-020-C", "mutation": "remove a common-record field", "expected": "reject"},
+        {"id": "NC-FF-020-D", "mutation": "unblock Build while decisions are unresolved", "expected": "reject"},
+        {"id": "NC-FF-020-E", "mutation": "allow production implementation in this run", "expected": "reject"}
+      ]
+    },
+    {
+      "id": "FF-PTRR-021",
+      "kind": "holistic",
+      "critical": true,
+      "source_requirement_ids": ["PTRR-FND-001", "PTRR-FND-002", "PTRR-FND-005", "PTRR-FND-006", "PTRR-FND-007", "PTRR-FND-008", "PTRR-FND-009", "PTRR-FND-010", "PTRR-FND-012", "PTRR-FND-014"],
+      "characteristic": "foundation safety under interaction",
+      "scope": "Stage 0-to-verified-problem end-to-end simulation",
+      "trigger": "full promotion gate after all atomic functions pass",
+      "predicate": "A qualified case progresses through separate proposal, verification, and CAS commit steps; invalid evidence, authority, verifier, and revision cases never commit.",
+      "implementation": {"status": "PLANNED_BLOCKED", "planned_test": "deterministic end-to-end simulation with recorded event trace", "dependency": "FF-PTRR-001 through FF-PTRR-019 and all manual gates"},
+      "evidence_contract": ["event traces", "state snapshots", "verdicts", "atomic prerequisite results"],
+      "owner": "Independent Test and Review principals",
+      "failure_action": "FAIL and DO_NOT_MERGE; BLOCKED if any prerequisite is unavailable",
+      "negative_controls": [
+        {"id": "NC-FF-021-A", "mutation": "producer self-verifies an otherwise valid problem", "expected": "no commit"},
+        {"id": "NC-FF-021-B", "mutation": "race two valid proposals at one revision", "expected": "at most one commit"},
+        {"id": "NC-FF-021-C", "mutation": "omit one validation gate after all earlier stages pass", "expected": "no verified-problem commit"}
+      ]
+    }
+  ],
+  "manual_gates": [
+    {
+      "id": "MG-PTRR-001",
+      "source_requirement_ids": ["PTRR-FND-008", "PTRR-FND-009", "PTRR-FND-010", "PTRR-FND-011", "PTRR-FND-013", "PTRR-FND-015", "PTRR-FND-021"],
+      "characteristic": "locked architecture ownership",
+      "predicate": "Lvvphole approves and merges an ADR naming the state-transition service package, accountable owner, persistence boundary, and interface while preserving all locked invariants.",
+      "owner": "Lvvphole",
+      "status": "OPEN",
+      "failure_action": "BLOCK_BUILD"
+    },
+    {
+      "id": "MG-PTRR-002",
+      "source_requirement_ids": ["PTRR-FND-002", "PTRR-FND-005", "PTRR-FND-006", "PTRR-FND-007", "PTRR-FND-014", "PTRR-FND-019"],
+      "characteristic": "domain-valid measurement and risk policy",
+      "predicate": "The accountable business owner approves the initial client domain, units, comparators, evidence sources, five validation thresholds, uncertainty handling, and risk tolerance.",
+      "owner": "Lvvphole or explicitly delegated domain authority",
+      "status": "OPEN",
+      "failure_action": "BLOCK_BUILD"
+    },
+    {
+      "id": "MG-PTRR-003",
+      "source_requirement_ids": ["PTRR-FND-012", "PTRR-FND-017", "PTRR-FND-018"],
+      "characteristic": "independent assurance",
+      "predicate": "A verifier distinct from the producer is identified, scoped, active, and qualified before consequential acceptance evidence is trusted.",
+      "owner": "Lvvphole",
+      "status": "OPEN",
+      "failure_action": "BLOCK_PROMOTION"
+    },
+    {
+      "id": "MG-PTRR-004",
+      "source_requirement_ids": ["PTRR-FND-001", "PTRR-FND-016", "PTRR-FND-020", "PTRR-FND-021", "PTRR-FND-022"],
+      "characteristic": "human scope freeze",
+      "predicate": "Lvvphole accepts the plan, exclusions, requirements, fitness functions, evidence contract, and residual uncertainty before Build.",
+      "owner": "Lvvphole",
+      "status": "OPEN",
+      "failure_action": "BLOCK_BUILD"
+    }
+  ],
+  "execution_order": [
+    "FF-PTRR-001",
+    "FF-PTRR-002",
+    "FF-PTRR-003",
+    "FF-PTRR-004",
+    "FF-PTRR-005",
+    "FF-PTRR-006",
+    "FF-PTRR-007",
+    "FF-PTRR-008",
+    "FF-PTRR-009",
+    "FF-PTRR-010",
+    "FF-PTRR-011",
+    "FF-PTRR-012",
+    "FF-PTRR-013",
+    "FF-PTRR-015",
+    "FF-PTRR-016",
+    "FF-PTRR-017",
+    "FF-PTRR-018",
+    "FF-PTRR-019",
+    "FF-PTRR-020",
+    "FF-PTRR-014",
+    "FF-PTRR-021"
+  ]
+}

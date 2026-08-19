@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-foundation-plan-0001",
+  "repository": "Lvvphole/multi-agent-dev",
+  "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
+  "tested_candidate_commit": "93880d6902c9a4a2fb4f66fd1584685e71c13e45",
+  "tested_candidate_tree": "3bd34c7caf40310293de2189d94af7189dc613a2",
+  "tested_candidate_artifact_set": {
+    "algorithm": "sha256 of the lexicographically sorted sha256sum lines for the Plan, checker, qualification test, declared path inventory, raw outputs, and test report",
+    "sha256": "d98aaa2f0d589392f9cd8fb1244a4562ce49c36447a04ca6433cfc4c3e20bb7a"
+  },
+  "environment": {
+    "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+    "python": "CPython 3.12.13",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+    "dependencies": "Python standard library only for the plan checker",
+    "raw_version_evidence": "04-test/raw/tool-versions.stdout.txt",
+    "raw_version_evidence_sha256": "2a1a988107af8f732596de9216affca54e65e97e8f376afbc2f70e0e3fd2d1ed"
+  },
+  "subject_inputs": [
+    {"path": "01-scout/findings.md", "sha256": "31445a339fbe98f9c0bcb382f59c555862e1cb52c199d7e2ec1dafe07953245d"},
+    {"path": "01-scout/source-manifest.json", "sha256": "79da528271f25fb830f9c47bbad29da174bff0c45877000b7c36ddea4f887a1a"},
+    {"path": "02-plan/plan.md", "sha256": "d08be259281a20e3d88bd09e453685e925cffd952e1578c9bf888632a0ab96d9"},
+    {"path": "02-plan/requirements.json", "sha256": "454bf7178961ffa11fb4d7c97684dc481acdf04220d2c2bc2cf6514225733a7b"},
+    {"path": "02-plan/fitness-functions.json", "sha256": "f866c9722b439eb67d1c4030e070fbf1ee5409bd9a9f68495ac4a881cd75ae1c"},
+    {"path": "02-plan/input-manifest.json", "sha256": "e83b59c400fb2819d3fd26141aa4a1d6b64ee5c30b0c1a8f9ed0666246f5bd7f"},
+    {"path": "04-test/candidate-changed-paths.txt", "sha256": "fb85352252ad4c80aff0298f5377158a50c489b35eb5776d45b18bb2c5f9c2ea"},
+    {"path": "scripts/verify_foundation_plan.py", "sha256": "05491f9cef519a04748b5aefbb8224b96ce768600acb80a39407df05dec79d7f"},
+    {"path": "tests/plans/test_foundation_plan_checker.py", "sha256": "11c8a30be833cc356eb79fba5ec27e394cab8ee95aee81c6a79ecc3f5b419bd4"}
+  ],
+  "executions": [
+    {
+      "id": "CHK-PLAN-STRUCTURE",
+      "subject_command": "python3 scripts/verify_foundation_plan.py --run-root evidence/runs/2026-08-19-foundation-plan-0001 --repo-root . --changed-paths-file evidence/runs/2026-08-19-foundation-plan-0001/04-test/candidate-changed-paths.txt",
+      "shell_wrapper": "start_utc=$(date -u +'%Y-%m-%dT%H:%M:%SZ'); print start; run subject_command with 2>&1; capture status; print end and status; exit status",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T02:58:09Z",
+      "ended_at": "2026-08-19T02:58:09Z",
+      "exit_status": 0,
+      "stdout": {"path": "04-test/raw/plan-structure.stdout.txt", "sha256": "ca8203507f807415cbf61bf7e804b896c7cc8ec354cb9adee504070091407b0e"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "foundation-plan-structure", "version": "1.0.0", "sha256": "05491f9cef519a04748b5aefbb8224b96ce768600acb80a39407df05dec79d7f", "qualification": "QUALIFIED_FOR_PLAN_STRUCTURE_ONLY"},
+      "verdict": "PASS",
+      "authorizes_build": false
+    },
+    {
+      "id": "CHK-PLAN-CHECKER-QUALIFICATION",
+      "subject_command": "python3 -m unittest discover -s tests/plans -p 'test_*.py' -v",
+      "shell_wrapper": "start_utc=$(date -u +'%Y-%m-%dT%H:%M:%SZ'); print start; run subject_command with 2>&1; capture status; print end and status; exit status",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T02:58:15Z",
+      "ended_at": "2026-08-19T02:58:15Z",
+      "exit_status": 0,
+      "stdout": {"path": "04-test/raw/plan-checker-qualification.stdout.txt", "sha256": "224d001007e896b37cffe4d2a33e5b56e7374d66e674c5a4ae222c0150154de5"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "unittest", "version": "Python 3.12.13", "test_module_sha256": "11c8a30be833cc356eb79fba5ec27e394cab8ee95aee81c6a79ecc3f5b419bd4", "subject_checker_sha256": "05491f9cef519a04748b5aefbb8224b96ce768600acb80a39407df05dec79d7f"},
+      "verdict": "PASS",
+      "qualification_result": "1 known-good accepted; 10 required negative behaviors detected"
+    },
+    {
+      "id": "CHK-INSTRUCTION-ROUTES",
+      "subject_command": "python3 scripts/verify_instruction_routes.py",
+      "shell_wrapper": "start_utc=$(date -u +'%Y-%m-%dT%H:%M:%SZ'); print start; run subject_command with 2>&1; capture status; print end and status; exit status",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T02:58:20Z",
+      "ended_at": "2026-08-19T02:58:20Z",
+      "exit_status": 0,
+      "stdout": {"path": "04-test/raw/instruction-route-check.stdout.txt", "sha256": "8f57219609ae6a9fe813a1642f4dbbbf34b6cb10219e7185ed1aa9bdfe65e21d"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "instruction-routing", "sha256": "ec7af45619a9faf7c385347a568c011bad1a1f144f5a679673e6c0138eb574dd", "qualification": "qualified by CHK-INSTRUCTION-CHECKER-QUALIFICATION"},
+      "verdict": "PASS"
+    },
+    {
+      "id": "CHK-INSTRUCTION-CHECKER-QUALIFICATION",
+      "subject_command": "python3 -m unittest discover -s tests/instructions -p 'test_*.py' -v",
+      "shell_wrapper": "start_utc=$(date -u +'%Y-%m-%dT%H:%M:%SZ'); print start; run subject_command with 2>&1; capture status; print end and status; exit status",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T02:58:27Z",
+      "ended_at": "2026-08-19T02:58:27Z",
+      "exit_status": 0,
+      "stdout": {"path": "04-test/raw/instruction-checker-qualification.stdout.txt", "sha256": "0364850f6b21e3822d3d01c38f0a27be8c26e6e83181c3740ff6b7b2198cbd6f"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "unittest", "version": "Python 3.12.13", "test_module_sha256": "108cacd3d2cce406e20fa077cec018397e2aca42ddf0db87413dc26c14f966ec"},
+      "verdict": "PASS",
+      "qualification_result": "1 known-good accepted; 9 mutations rejected"
+    },
+    {
+      "id": "CHK-PYTHON-COMPILE",
+      "subject_command": "python3 -m py_compile scripts/verify_foundation_plan.py tests/plans/test_foundation_plan_checker.py",
+      "shell_wrapper": "start_utc=$(date -u +'%Y-%m-%dT%H:%M:%SZ'); print start; run subject_command with 2>&1; capture status; print end and status; exit status",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T02:58:33Z",
+      "ended_at": "2026-08-19T02:58:33Z",
+      "exit_status": 0,
+      "stdout": {"path": "04-test/raw/python-compile.stdout.txt", "sha256": "85dbc8a653cf0df4f0c49af78edc36222d83dea3928ed07cbbdbaec68ed05822"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "CPython py_compile", "version": "3.12.13"},
+      "verdict": "PASS"
+    },
+    {
+      "id": "CHK-ENGINEERING-RULES",
+      "subject_command": "python3 /root/.codex/skills/remote-skills/skill-6a7bbe3c89448191900ebcdd6395ac7c/scripts/check.py scripts/verify_foundation_plan.py tests/plans/test_foundation_plan_checker.py",
+      "shell_wrapper": "start_utc=$(date -u +'%Y-%m-%dT%H:%M:%SZ'); print start; run subject_command with 2>&1; capture status; print end and status; exit status",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T02:58:48Z",
+      "ended_at": "2026-08-19T02:58:48Z",
+      "exit_status": 0,
+      "stdout": {"path": "04-test/raw/engineering-rules.stdout.txt", "sha256": "b75723a08d13ca4758fc7be8176842170c85335905912b0e0472ecb02b5fe527"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "canonical-51-rule-engineering-check", "sha256": "2a40bb5e7692ee949e4a2e8b831c278a29bd845559f6c56c9286fdd30a10b18e"},
+      "verdict": "PASS_WITH_REVIEW_ITEMS",
+      "review_items": 6,
+      "blocking_findings": 0
+    }
+  ],
+  "produced_artifacts": [
+    {"path": "04-test/test-report.json", "sha256": "0ec627d9e56eb5904eb7ddafd28f38fbc8f25ff1f0b1f33849d90c9b1de581bb"},
+    {"path": "04-test/raw/engineering-rules.stdout.txt", "sha256": "b75723a08d13ca4758fc7be8176842170c85335905912b0e0472ecb02b5fe527"},
+    {"path": "04-test/raw/instruction-checker-qualification.stdout.txt", "sha256": "0364850f6b21e3822d3d01c38f0a27be8c26e6e83181c3740ff6b7b2198cbd6f"},
+    {"path": "04-test/raw/instruction-route-check.stdout.txt", "sha256": "8f57219609ae6a9fe813a1642f4dbbbf34b6cb10219e7185ed1aa9bdfe65e21d"},
+    {"path": "04-test/raw/plan-checker-qualification.stdout.txt", "sha256": "224d001007e896b37cffe4d2a33e5b56e7374d66e674c5a4ae222c0150154de5"},
+    {"path": "04-test/raw/plan-structure.stdout.txt", "sha256": "ca8203507f807415cbf61bf7e804b896c7cc8ec354cb9adee504070091407b0e"},
+    {"path": "04-test/raw/python-compile.stdout.txt", "sha256": "85dbc8a653cf0df4f0c49af78edc36222d83dea3928ed07cbbdbaec68ed05822"},
+    {"path": "04-test/raw/tool-versions.stdout.txt", "sha256": "2a1a988107af8f732596de9216affca54e65e97e8f376afbc2f70e0e3fd2d1ed"}
+  ],
+  "overall": {
+    "automated_verification_verdict": "PASS",
+    "checker_qualification": "QUALIFIED_FOR_PLAN_STRUCTURE_ONLY",
+    "independent_acceptance": "BLOCKED",
+    "implementation_gate": "BLOCKED",
+    "human_merge": "REQUIRED"
+  }
+}
