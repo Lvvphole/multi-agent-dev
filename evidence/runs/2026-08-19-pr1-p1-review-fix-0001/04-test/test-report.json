@@ -3,8 +3,14 @@
   "run_id": "2026-08-19-pr1-p1-review-fix-0001",
   "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
   "tested_candidate_commit": "ff3e3e551b4d236c7a3dd05456be7ab4498566c0",
-  "candidate_verdict": "PASS",
-  "independent_acceptance": "EXTERNAL_PR_REVIEW_REQUIRED",
+  "candidate_verdict": "BLOCKED",
+  "independent_acceptance": "BLOCKED",
+  "blocked_reasons": [
+    "Required accepted Scout artifacts are absent.",
+    "Required frozen Plan artifacts are absent.",
+    "Cross-stage predecessor input continuity cannot be reconstructed for this historical run.",
+    "Superseded by complete run 2026-08-19-pr3-p1-review-fix-0002."
+  ],
   "requirements": [
     {
       "id": "PR1-P1-ROUTE-001",
@@ -64,6 +70,7 @@
     "qualification_state": "QUALIFIED_FOR_INSTRUCTION_ROUTING"
   },
   "scope_limits": [
+    "Passing checks in this report do not convert the overall BLOCKED verdict to PASS.",
     "This candidate result does not merge the change.",
     "The producer is not the independent code-review authority.",
     "Independent Codex review must report no major issue before completion is claimed."

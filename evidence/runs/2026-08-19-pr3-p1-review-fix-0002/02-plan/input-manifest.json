@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr3-p1-review-fix-0002",
+  "status": "FROZEN_BY_HUMAN_DIRECTIVE",
+  "base_commit": "94b8cb24d8e033a4e08e11656343c1989c2c9c20",
+  "accepted_scout_inputs": [
+    {
+      "path": "../01-scout/findings.md",
+      "sha256": "a08100034fec3c4fe6a86c93acd26ee16c6e53d0bcedbe61e0f120ff71a474eb",
+      "acceptance": "ACCEPTED_SCOPE_BY_HUMAN_DIRECTIVE"
+    },
+    {
+      "path": "../01-scout/source-manifest.json",
+      "sha256": "1676bcabd0a54234ea1fb93158a939f0f194b0d5ba41d421e2f440ffeb0825ba",
+      "acceptance": "ACCEPTED_SCOPE_BY_HUMAN_DIRECTIVE"
+    }
+  ],
+  "governing_inputs": [
+    {"path": "../../../../AGENTS.md", "sha256": "f36927fa21ac14e904e23c17f07af9b76eac23f313e2ef6313a0caabf4464c9e"},
+    {"path": "../../../../authority/VERIFICATION.md", "sha256": "9136b7688641ef9ec549b66078b50c7361aefed77ef51faf3de18ad059db3b87"},
+    {"path": "../../../../workflows/implementation/02-plan/CONTEXT.md", "sha256": "5b67056d61a8642e63d32b6ef7698a10a3137fc71c86155b50767a383ed137e5"}
+  ],
+  "human_acceptance": {
+    "principal": "Lvvphole",
+    "decision": "FROZEN_BY_DIRECTIVE",
+    "accepted_scope": "All actionable Codex review issues; no merge or architecture change."
+  },
+  "unresolved": [
+    "Independent Codex review is pending.",
+    "Final human merge decision is pending."
+  ]
+}

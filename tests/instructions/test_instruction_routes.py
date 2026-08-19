@@ -175,6 +175,37 @@ class InstructionRouteCheckerTest(unittest.TestCase):
 
         self.assert_rejected(mutate, "route outside repository in AGENTS.md")
 
+    def test_absolute_posix_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            absolute_target = (root / "authority" / "SECURITY.md").as_posix()
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    f"({absolute_target})",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "absolute route target in AGENTS.md")
+
+    def test_absolute_windows_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    "(C:/repository/authority/SECURITY.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "absolute route target in AGENTS.md")
+
     def test_stage_order_change_is_rejected(self) -> None:
         def mutate(root: Path) -> None:
             stages = root / "workflows" / "implementation"

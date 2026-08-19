@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr3-p1-review-fix-0002",
+  "status": "FROZEN_BY_HUMAN_DIRECTIVE",
+  "requirements": [
+    {
+      "id": "PR3-P1-ABSOLUTE-003",
+      "source_thread": "PRRT_kwDOT3jdV86aVzHN",
+      "source_comment": "PRRC_kwDOT3jdV87jFslX",
+      "predicate": "Every local Markdown route target is syntactically repository-relative before normalization or filesystem resolution.",
+      "acceptance_evidence": [
+        "known-good repository passes",
+        "POSIX absolute target inside the checkout is rejected",
+        "Windows absolute target is rejected",
+        "existing outside-repository relative target is rejected"
+      ],
+      "failure_action": "BLOCK promotion and repair the route-target classifier."
+    },
+    {
+      "id": "PR3-P1-CONTINUITY-004",
+      "source_thread": "PRRT_kwDOT3jdV86aVzHP",
+      "source_comment": "PRRC_kwDOT3jdV87jFslZ",
+      "predicate": "A Test PASS is admissible only when accepted Scout and frozen Plan inputs exist and cross-stage artifact identities are digest-bound.",
+      "acceptance_evidence": [
+        "historical run 0001 overall verdict is BLOCKED with the missing-predecessor reason",
+        "replacement run contains every required Scout and Plan output",
+        "Build binds the frozen Plan artifacts",
+        "Test binds Scout, Plan, Build, code, test, and raw execution artifacts"
+      ],
+      "failure_action": "Report BLOCKED; do not count executed checks as an overall PASS."
+    },
+    {
+      "id": "PR3-REGRESSION-005",
+      "source": "Previously resolved PR #1 and PR #3 P1 findings",
+      "predicate": "All previously qualified route-binding and canonical-sequence controls remain correctly classified.",
+      "acceptance_evidence": [
+        "canonical route checker passes the known-good repository",
+        "the full mutation suite rejects every known-bad repository"
+      ],
+      "failure_action": "FAIL and return to Build."
+    }
+  ],
+  "scope_exclusions": [
+    "No architecture change.",
+    "No dependency change.",
+    "No merge or activation."
+  ],
+  "unresolved_human_decisions": [
+    "Final merge decision remains with Lvvphole."
+  ]
+}

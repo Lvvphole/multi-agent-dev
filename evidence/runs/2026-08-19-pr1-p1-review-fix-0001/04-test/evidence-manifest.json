@@ -88,7 +88,7 @@
   "produced_artifacts": [
     {"path": "../03-build/change-manifest.json", "sha256": "269c295309f381008fbd1c1125c878c9b9964ef5e5c67c63c21001ed1bc4d686"},
     {"path": "../03-build/developer-checks.json", "sha256": "160332c1057105c04dfd8881487606fc5375e34d6e15392821967e1676c72047"},
-    {"path": "test-report.json", "sha256": "84ca82ec22cffddd69dfa37bb97ccf46b2432d46d3643d29ef68e170fc7d3b2a"},
+    {"path": "test-report.json", "sha256": "58498dd082bb4f3b35321c38dbc31c03b64f25c5db6cceffcac91350f684dba1"},
     {"path": "raw/python-compile.stdout.txt", "sha256": "59d2d6dc10d0fba90025a331c07c47733cb5256404cf8838cb553f35c5267bc9"},
     {"path": "raw/instruction-route-check.stdout.txt", "sha256": "8f6259014f6c5ef2faa6b68ca4027e252cc3613aab37a46b0a99a594890c9ce1"},
     {"path": "raw/instruction-checker-qualification.stdout.txt", "sha256": "131b2aa17700cec279866bf2f50d43025dd38408faab329b43de8e455ec913ec"},
@@ -113,9 +113,14 @@
     {"rule": "PY-002", "evidence": "scripts/verify_instruction_routes.py:2 and 176-201"}
   ],
   "overall": {
-    "candidate_verdict": "PASS",
+    "candidate_verdict": "BLOCKED",
     "checker_qualification": "QUALIFIED_FOR_INSTRUCTION_ROUTING",
-    "independent_code_review": "EXTERNAL_PR_REVIEW_REQUIRED",
+    "independent_code_review": "BLOCKED",
+    "blocked_reasons": [
+      "Accepted Scout artifacts are absent.",
+      "Frozen Plan artifacts are absent.",
+      "This historical run is superseded by 2026-08-19-pr3-p1-review-fix-0002."
+    ],
     "human_merge": "REQUIRED"
   }
 }

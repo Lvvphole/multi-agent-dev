@@ -6,7 +6,7 @@ from __future__ import annotations
 import re
 import sys
 from collections import Counter
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -93,6 +93,10 @@ def path_label_binding(
     target: str,
 ) -> tuple[str, str, str]:
     return declaration, target, target
+
+
+def is_absolute_route_target(target: str) -> bool:
+    return PurePosixPath(target).is_absolute() or PureWindowsPath(target).is_absolute()
 
 
 EXPECTED_ROUTE_BINDINGS = {
@@ -185,6 +189,9 @@ def local_route_bindings(
             if "://" in target or target.startswith("#"):
                 continue
             clean_target = target.split("#", 1)[0]
+            if is_absolute_route_target(clean_target):
+                errors.append(f"absolute route target in {source}: {target}")
+                continue
             resolved_target = (path.parent / clean_target).resolve()
             try:
                 repository_target = resolved_target.relative_to(ROOT)
