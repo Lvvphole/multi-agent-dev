@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr1-p1-review-fix-0001",
   "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
-  "tested_candidate_commit": "PENDING_PUBLICATION",
+  "tested_candidate_commit": "ff3e3e551b4d236c7a3dd05456be7ab4498566c0",
   "candidate_verdict": "PASS",
   "independent_acceptance": "EXTERNAL_PR_REVIEW_REQUIRED",
   "requirements": [
@@ -48,7 +48,8 @@
     {"id": "PY-COMPILE", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/python-compile.stdout.txt"},
     {"id": "INSTRUCTION-ROUTING", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/instruction-route-check.stdout.txt"},
     {"id": "CHECKER-QUALIFICATION", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/instruction-checker-qualification.stdout.txt"},
-    {"id": "ENGINEERING-RULES", "verdict": "PASS", "exit_status": 0, "blocking_findings": 0, "review_findings": 0, "raw_output": "raw/engineering-rules.stdout.txt"}
+    {"id": "ENGINEERING-RULES", "verdict": "PASS", "exit_status": 0, "blocking_findings": 0, "review_findings": 0, "raw_output": "raw/engineering-rules.stdout.txt"},
+    {"id": "EVIDENCE-INTEGRITY", "verdict": "PASS", "exit_status": 0, "checked_artifacts": 14, "raw_output": "raw/evidence-integrity.stdout.txt"}
   ],
   "checker_qualification": {
     "known_good_accepted": 1,

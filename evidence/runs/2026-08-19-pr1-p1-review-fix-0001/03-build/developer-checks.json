@@ -26,6 +26,12 @@
       "command": "python3 /root/.codex/skills/remote-skills/skill-6a7bbe3c89448191900ebcdd6395ac7c/scripts/check.py scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
       "exit_status": 0,
       "raw_output": "../04-test/raw/engineering-rules.stdout.txt"
+    },
+    {
+      "id": "DEV-EVIDENCE-INTEGRITY",
+      "command": "Python SHA-256 verification of manifest inputs, produced artifacts, and execution outputs",
+      "exit_status": 0,
+      "raw_output": "../04-test/raw/evidence-integrity.stdout.txt"
     }
   ],
   "candidate_result": "PASS",
