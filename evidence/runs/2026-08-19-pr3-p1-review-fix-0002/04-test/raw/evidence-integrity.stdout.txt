@@ -1,5 +1,6 @@
-start_utc=2026-08-19T04:02:48Z
-checked_artifacts=19
-EVIDENCE_INTEGRITY: PASS
-end_utc=2026-08-19T04:02:48Z
+EVIDENCE_MANIFEST: PASS
+manifest=evidence/runs/2026-08-19-pr3-p1-review-fix-0002/04-test/evidence-manifest.json
+checked_artifacts=23
+start_utc=2026-08-19T04:22:28Z
+end_utc=2026-08-19T04:22:28Z
 exit_status=0

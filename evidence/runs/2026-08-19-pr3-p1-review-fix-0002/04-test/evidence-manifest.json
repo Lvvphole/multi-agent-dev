@@ -2,68 +2,82 @@
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr3-p1-review-fix-0002",
   "repository": "Lvvphole/multi-agent-dev",
-  "base_commit": "94b8cb24d8e033a4e08e11656343c1989c2c9c20",
-  "tested_source_commit": "f9a8ba4cd7ad7dd53ce63b48d5bc35b64a040551",
+  "base_commit": "47e903b2b68c8bb9315b54fd3be40b1121bd1dc1",
+  "tested_source_commit": "d09abdc4dc2efb32b7f935fcda617b502578d66a",
+  "plan_revision": 2,
   "working_directory": "/workspace/scratch/568159e64489/repo_draft",
   "toolchain": {
     "python": "CPython 3.12.13",
     "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
     "dependencies": "Python standard library",
     "raw_evidence": "raw/tool-versions.stdout.txt",
-    "raw_sha256": "61b82bc4012739ecd5807c30dbeedda987fbebd0a2dcaa1111c90bd3b3917d14"
+    "raw_sha256": "c7a54141a054942640fb0e628a994a601ffc13dae7bd2c0633c424bfb373961e"
   },
   "inputs": [
-    {"stage": "Scout", "path": "../01-scout/findings.md", "sha256": "a08100034fec3c4fe6a86c93acd26ee16c6e53d0bcedbe61e0f120ff71a474eb"},
-    {"stage": "Scout", "path": "../01-scout/source-manifest.json", "sha256": "1676bcabd0a54234ea1fb93158a939f0f194b0d5ba41d421e2f440ffeb0825ba"},
-    {"stage": "Plan", "path": "../02-plan/plan.md", "sha256": "014647a60239a0161657a2ce36d8541d9baedce07babe58b5d741d018d4d87e9"},
-    {"stage": "Plan", "path": "../02-plan/requirements.json", "sha256": "59b5222d0d6043a934be4110cbaafa43f7db963a3850b5893f8ab872fc156f85"},
-    {"stage": "Plan", "path": "../02-plan/fitness-functions.json", "sha256": "8a2de855c264a832ac17a47b99951e62cf49c4131747c89efca4931042058b58"},
-    {"stage": "Plan", "path": "../02-plan/input-manifest.json", "sha256": "c093d673672ba1e0d86e195ba3a1e92abd50fde83320fe5c29942db68d3cef6b"},
-    {"stage": "Build", "path": "../03-build/change-manifest.json", "sha256": "bc2657b9cb07977ddce158fc1d31df0f81517f940cd2661e2ba14e038adf6c53"},
-    {"stage": "Build", "path": "../03-build/developer-checks.json", "sha256": "ea1d33e7377c0f4fa50c2995fb98ac9fb03ddad3289ae8731b7ad054f32d4e89"},
-    {"stage": "Build", "path": "../../../../scripts/verify_instruction_routes.py", "sha256": "2584cfb3e771bfbc632823d3b950c0859dbf79d587456b9e749eecffa9a1abaf"},
-    {"stage": "Build", "path": "../../../../tests/instructions/test_instruction_routes.py", "sha256": "b2d08f27e33da3c05ab0321eefffd8eca99d90c4c2329e0bcfbcbde044ea6e5f"},
+    {"stage": "Scout", "path": "../01-scout/findings.md", "sha256": "efae73739e7b600787bd1bb096e23b271cea9091a2a4b19c9c15bdd86cd95952"},
+    {"stage": "Scout", "path": "../01-scout/source-manifest.json", "sha256": "aa584f4b9246535287ca1d0802bb8364f3947b22e67af5ffe73a6f85ed5893e1"},
+    {"stage": "Plan", "path": "../02-plan/plan.md", "sha256": "a35f06c9b766c70a3da40bc504e3e38d1635c67a18c7a47ada142619d03251ca"},
+    {"stage": "Plan", "path": "../02-plan/requirements.json", "sha256": "beaece8d466b3f19a479b0605ffb1efdd848eb2bbbd8943d9bcc4e30fcbf8db5"},
+    {"stage": "Plan", "path": "../02-plan/fitness-functions.json", "sha256": "627b116eaf712905c257ef637ec1883337b5d78ab24fd04789bd3a15f43a74d7"},
+    {"stage": "Plan", "path": "../02-plan/input-manifest.json", "sha256": "57249b313ce0b2e0659c93056bffda77e0faac036d6407f9d93d705aa7f5f7d4"},
+    {"stage": "Build", "path": "../03-build/change-manifest.json", "sha256": "858c7f15043e0a5d65fe32951d615213fb0c10c5e832daf22aab2d39065dea9c"},
+    {"stage": "Build", "path": "../03-build/developer-checks.json", "sha256": "c6d0a6e10b9355aa7318f1e88371c0230219a9f8e0df6f6dc61d5a0b5efeafb9"},
+    {"stage": "Build", "path": "../../../../scripts/verify_instruction_routes.py", "sha256": "fc876cd6d94533766e543e302e4f77da87e99286cd43ab89659e76393cbd7b8d"},
+    {"stage": "Build", "path": "../../../../scripts/verify_evidence_manifest.py", "sha256": "ee943aab51513797ad866341860e8bc69a7d26667726391e7d01c79f05e8d3ae"},
+    {"stage": "Build", "path": "../../../../tests/instructions/test_instruction_routes.py", "sha256": "c0467700e5cc1f911d74db4032255bf71f7be87939c121a6a17ffbfc6d38e647"},
+    {"stage": "Build", "path": "../../../../tests/evidence/test_verify_evidence_manifest.py", "sha256": "c094d5435428ce3d4785d9ee7c568e7c4cb21680fb482608fe510ebed39430b6"},
     {"stage": "Historical correction", "path": "../../2026-08-19-pr1-p1-review-fix-0001/04-test/test-report.json", "sha256": "58498dd082bb4f3b35321c38dbc31c03b64f25c5db6cceffcac91350f684dba1"},
     {"stage": "Historical correction", "path": "../../2026-08-19-pr1-p1-review-fix-0001/04-test/evidence-manifest.json", "sha256": "8b6943e10fe93c75f2763cce0c7ece970f72dd6b5f3f90f9b1034883d407ade1"}
   ],
   "executions": [
     {
       "id": "PY-COMPILE",
-      "command": "python3 -m py_compile scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
-      "started_at": "2026-08-19T03:59:48Z",
-      "ended_at": "2026-08-19T03:59:48Z",
+      "command": "python3 -m py_compile scripts/verify_instruction_routes.py scripts/verify_evidence_manifest.py tests/instructions/test_instruction_routes.py tests/evidence/test_verify_evidence_manifest.py",
+      "started_at": "2026-08-19T04:15:49Z",
+      "ended_at": "2026-08-19T04:15:50Z",
       "exit_status": 0,
-      "stdout": {"path": "raw/python-compile.stdout.txt", "sha256": "5244905590ae16e95ca0addf554ca7f767d6349a0faa458496517b1ae4875a58"},
+      "stdout": {"path": "raw/python-compile.stdout.txt", "sha256": "9f2c6cbd283539ff7dccccfc4df866c94916909d85efddb451d03bf36eec9fcf"},
       "verdict": "PASS"
     },
     {
       "id": "INSTRUCTION-ROUTING",
       "command": "python3 scripts/verify_instruction_routes.py",
-      "started_at": "2026-08-19T03:59:52Z",
-      "ended_at": "2026-08-19T03:59:52Z",
+      "started_at": "2026-08-19T04:15:56Z",
+      "ended_at": "2026-08-19T04:15:56Z",
       "exit_status": 0,
-      "stdout": {"path": "raw/instruction-route-check.stdout.txt", "sha256": "f1211834a67561e784dc1fa3e4a6ab4ac45797b402d3a41765435512574f7d16"},
-      "checker": {"id": "instruction-routing", "sha256": "2584cfb3e771bfbc632823d3b950c0859dbf79d587456b9e749eecffa9a1abaf", "qualification": "QUALIFIED_FOR_INSTRUCTION_ROUTING"},
+      "stdout": {"path": "raw/instruction-route-check.stdout.txt", "sha256": "c5eb3f9e4e51f1bb337aeea4a0f5330685517911364572e864773e33d6aa0bf3"},
+      "checker": {"id": "instruction-routing", "sha256": "fc876cd6d94533766e543e302e4f77da87e99286cd43ab89659e76393cbd7b8d", "qualification": "QUALIFIED_FOR_INSTRUCTION_ROUTING"},
       "verdict": "PASS"
     },
     {
       "id": "CHECKER-QUALIFICATION",
       "command": "python3 -m unittest discover -s tests/instructions -p 'test_*.py' -v",
-      "started_at": "2026-08-19T03:59:56Z",
-      "ended_at": "2026-08-19T03:59:57Z",
+      "started_at": "2026-08-19T04:16:00Z",
+      "ended_at": "2026-08-19T04:16:01Z",
       "exit_status": 0,
-      "stdout": {"path": "raw/instruction-checker-qualification.stdout.txt", "sha256": "e62db9e581bc27afaf98cb247f114f289a5b77ac3abc4e7be0ba3cdbf49ec4e6"},
-      "checker": {"id": "unittest", "version": "Python 3.12.13", "test_sha256": "b2d08f27e33da3c05ab0321eefffd8eca99d90c4c2329e0bcfbcbde044ea6e5f"},
-      "qualification": {"known_good_accepted": 1, "known_bad_mutations_rejected": 18},
+      "stdout": {"path": "raw/instruction-checker-qualification.stdout.txt", "sha256": "0d840c2484e98498c9de366fb918b91936d83c5dec063694605d6197e37bf7b0"},
+      "checker": {"id": "unittest", "version": "Python 3.12.13", "test_sha256": "c0467700e5cc1f911d74db4032255bf71f7be87939c121a6a17ffbfc6d38e647"},
+      "qualification": {"known_good_accepted": 1, "known_bad_mutations_rejected": 21},
+      "verdict": "PASS"
+    },
+    {
+      "id": "EVIDENCE-VERIFIER-QUALIFICATION",
+      "command": "python3 -m unittest discover -s tests/evidence -p 'test_*.py' -v",
+      "started_at": "2026-08-19T04:16:05Z",
+      "ended_at": "2026-08-19T04:16:06Z",
+      "exit_status": 0,
+      "stdout": {"path": "raw/evidence-verifier-qualification.stdout.txt", "sha256": "7d842d34c7c6f1d538adf10a79a6eee7c692a25f5967431e7f8c2222bb890e3e"},
+      "checker": {"id": "unittest", "version": "Python 3.12.13", "test_sha256": "c094d5435428ce3d4785d9ee7c568e7c4cb21680fb482608fe510ebed39430b6"},
+      "qualification": {"known_good_accepted": 1, "known_bad_mutations_rejected": 6},
       "verdict": "PASS"
     },
     {
       "id": "ENGINEERING-RULES",
-      "command": "python3 /root/.codex/skills/remote-skills/skill-6a7bbe3c89448191900ebcdd6395ac7c/scripts/check.py scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
-      "started_at": "2026-08-19T04:00:01Z",
-      "ended_at": "2026-08-19T04:00:01Z",
+      "command": "python3 /root/.codex/skills/remote-skills/skill-6a7bbe3c89448191900ebcdd6395ac7c/scripts/check.py scripts/verify_instruction_routes.py scripts/verify_evidence_manifest.py tests/instructions/test_instruction_routes.py tests/evidence/test_verify_evidence_manifest.py",
+      "started_at": "2026-08-19T04:16:13Z",
+      "ended_at": "2026-08-19T04:16:13Z",
       "exit_status": 0,
-      "stdout": {"path": "raw/engineering-rules.stdout.txt", "sha256": "651626dcfbf9d1ccb4f1bddc8039d48e92fd29a2d29591bb41811b1a6ef69d0a"},
+      "stdout": {"path": "raw/engineering-rules.stdout.txt", "sha256": "dd861f4c189855092d351a18bdfa531d07d9d3d29495e7d55c461315e46ab004"},
       "checker": {"id": "canonical-51-rule-engineering-check", "sha256": "2a40bb5e7692ee949e4a2e8b831c278a29bd845559f6c56c9286fdd30a10b18e"},
       "blocking_findings": 0,
       "review_findings": 0,
@@ -72,25 +86,36 @@
     {
       "id": "STAGE-CONTINUITY",
       "command": "Python SHA-256 verification of Plan inputs and Build handoff inputs",
-      "started_at": "2026-08-19T04:00:12Z",
-      "ended_at": "2026-08-19T04:00:12Z",
+      "started_at": "2026-08-19T04:16:24Z",
+      "ended_at": "2026-08-19T04:16:25Z",
       "exit_status": 0,
-      "stdout": {"path": "raw/stage-continuity.stdout.txt", "sha256": "3c083fda88bb320157f9583cddafc0550fbf8757b5b3a57b06dc00a20a98f2c1"},
-      "checked_predecessor_artifacts": 11,
+      "stdout": {"path": "raw/stage-continuity.stdout.txt", "sha256": "b3f3eecb01888cae59241476141c6e9d00a6df5e572c07e5c3caba83c08d3799"},
+      "checked_predecessor_artifacts": 13,
       "verdict": "PASS"
     }
   ],
   "integrity_verification": {
-    "method": "SHA-256 over all manifest inputs, produced artifacts, and execution stdout entries",
-    "started_at": "2026-08-19T04:02:48Z",
-    "ended_at": "2026-08-19T04:02:48Z",
-    "exit_status": 0,
-    "checked_artifacts": 19,
-    "raw_output": {
-      "path": "raw/evidence-integrity.stdout.txt",
-      "sha256": "c1c7671e421865c8897358010eb97124a437af87025c9be0b4f01c9114220b1c"
+    "command": "python3 scripts/verify_evidence_manifest.py evidence/runs/2026-08-19-pr3-p1-review-fix-0002/04-test/evidence-manifest.json",
+    "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+    "checker": {
+      "path": "scripts/verify_evidence_manifest.py",
+      "sha256": "ee943aab51513797ad866341860e8bc69a7d26667726391e7d01c79f05e8d3ae",
+      "qualification": {
+        "status": "QUALIFIED",
+        "known_good_accepted": 1,
+        "known_bad_mutations_rejected": 6,
+        "test_output": "raw/evidence-verifier-qualification.stdout.txt"
+      }
     },
-    "scope_note": "The verifier's own raw report is excluded from the checked set to avoid self-reference.",
+    "started_at": "2026-08-19T04:22:28Z",
+    "ended_at": "2026-08-19T04:22:28Z",
+    "exit_status": 0,
+    "checked_artifacts": 23,
+    "stdout": {
+      "path": "raw/evidence-integrity.stdout.txt",
+      "sha256": "d0012e5ce91f1c93b666a8a204691f3c4d65f12c035791d273b1b8626f86f1ae"
+    },
+    "scope": "The verifier checks inputs, produced_artifacts, execution stdout, and diagnostic raw outputs. It excludes integrity_verification to avoid a self-referential manifest digest.",
     "verdict": "PASS"
   },
   "diagnostics": [
@@ -100,7 +125,7 @@
       "ended_at": "2026-08-19T04:03:35Z",
       "exit_status": 5,
       "classification": "INVALID_NONREQUIRED_DIAGNOSTIC",
-      "reason": "Python unittest discovery did not recurse into non-package test subdirectories. The canonical scoped test contract executed 19 tests and passed.",
+      "reason": "Python unittest discovery did not recurse into non-package test subdirectories. The canonical scoped test contracts executed 22 instruction tests and 7 evidence-verifier tests and passed.",
       "raw_output": {
         "path": "raw/noncanonical-full-discovery.stdout.txt",
         "sha256": "f466f2370e6887e9d7e9695a1db7c1141ba7efb2a2de06cbcf2f3dfe02aa6b52"
@@ -109,14 +134,14 @@
     }
   ],
   "produced_artifacts": [
-    {"path": "test-report.json", "sha256": "a5cecce78261d0da9c1787c6d9d4ac592150c9e6446246cc88d01b4261a80b18"},
-    {"path": "raw/tool-versions.stdout.txt", "sha256": "61b82bc4012739ecd5807c30dbeedda987fbebd0a2dcaa1111c90bd3b3917d14"}
+    {"path": "test-report.json", "sha256": "004b5f2351f4938f6d920ab2b49a70dfceed88a1fd0e548a6242ef1ee9e3602c"},
+    {"path": "raw/tool-versions.stdout.txt", "sha256": "c7a54141a054942640fb0e628a994a601ffc13dae7bd2c0633c424bfb373961e"}
   ],
   "overall": {
-    "candidate_verdict": "BLOCKED",
-    "checker_qualification": "QUALIFIED_FOR_INSTRUCTION_ROUTING",
+    "candidate_verdict": "PASS",
+    "checker_qualification": "QUALIFIED_FOR_INSTRUCTION_ROUTING_AND_EVIDENCE_INTEGRITY",
     "stage_continuity": "PASS",
-    "independent_code_review": "BLOCKED_PENDING_PLAN_REVISION_2",
+    "independent_code_review": "EXTERNAL_CODEX_REVIEW_REQUIRED",
     "human_merge": "REQUIRED"
   }
 }

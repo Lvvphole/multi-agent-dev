@@ -1,13 +1,10 @@
 {
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr3-p1-review-fix-0002",
-  "tested_source_commit": "f9a8ba4cd7ad7dd53ce63b48d5bc35b64a040551",
-  "candidate_verdict": "BLOCKED",
-  "independent_acceptance": "BLOCKED",
-  "blocked_reasons": [
-    "Plan revision 2 was opened by P1 findings at review commit 47e903b2b68c8bb9315b54fd3be40b1121bd1dc1.",
-    "The revised Build and Test trajectory has not yet been bound in this intermediate state."
-  ],
+  "tested_source_commit": "d09abdc4dc2efb32b7f935fcda617b502578d66a",
+  "plan_revision": 2,
+  "candidate_verdict": "PASS",
+  "independent_acceptance": "EXTERNAL_CODEX_REVIEW_REQUIRED",
   "requirements": [
     {
       "id": "PR3-P1-ABSOLUTE-003",
@@ -34,35 +31,74 @@
       "verdict": "PASS",
       "evidence": [
         "INSTRUCTION_ROUTING: PASS",
-        "19/19 qualification tests PASS",
+        "22/22 instruction-checker qualification tests PASS",
+        "7/7 evidence-verifier qualification tests PASS",
         "engineering rules: 0 blocking and 0 review findings"
+      ]
+    },
+    {
+      "id": "PR3-P1-RENDERED-006",
+      "verdict": "PASS",
+      "evidence": [
+        "test_html_commented_route_table_is_rejected",
+        "test_fenced_route_table_is_rejected",
+        "test_indented_code_route_table_is_rejected"
+      ]
+    },
+    {
+      "id": "PR3-P1-INTEGRITY-COMMAND-007",
+      "verdict": "PASS",
+      "evidence": [
+        "scripts/verify_evidence_manifest.py",
+        "7/7 verifier qualification tests PASS",
+        "exact EVIDENCE-MANIFEST command in evidence-manifest.json",
+        "raw/evidence-integrity.stdout.txt"
       ]
     }
   ],
   "checks": [
     {"id": "PY-COMPILE", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/python-compile.stdout.txt"},
     {"id": "INSTRUCTION-ROUTING", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/instruction-route-check.stdout.txt"},
-    {"id": "CHECKER-QUALIFICATION", "verdict": "PASS", "exit_status": 0, "known_good_accepted": 1, "known_bad_mutations_rejected": 18, "raw_output": "raw/instruction-checker-qualification.stdout.txt"},
+    {"id": "CHECKER-QUALIFICATION", "verdict": "PASS", "exit_status": 0, "known_good_accepted": 1, "known_bad_mutations_rejected": 21, "raw_output": "raw/instruction-checker-qualification.stdout.txt"},
+    {"id": "EVIDENCE-VERIFIER-QUALIFICATION", "verdict": "PASS", "exit_status": 0, "known_good_accepted": 1, "known_bad_mutations_rejected": 6, "raw_output": "raw/evidence-verifier-qualification.stdout.txt"},
     {"id": "ENGINEERING-RULES", "verdict": "PASS", "exit_status": 0, "blocking_findings": 0, "review_findings": 0, "raw_output": "raw/engineering-rules.stdout.txt"},
-    {"id": "STAGE-CONTINUITY", "verdict": "PASS", "exit_status": 0, "checked_predecessor_artifacts": 11, "raw_output": "raw/stage-continuity.stdout.txt"},
-    {"id": "EVIDENCE-INTEGRITY", "verdict": "PASS", "exit_status": 0, "checked_artifacts": 19, "raw_output": "raw/evidence-integrity.stdout.txt"}
+    {"id": "STAGE-CONTINUITY", "verdict": "PASS", "exit_status": 0, "checked_predecessor_artifacts": 13, "raw_output": "raw/stage-continuity.stdout.txt"},
+    {
+      "id": "EVIDENCE-INTEGRITY",
+      "command": "python3 scripts/verify_evidence_manifest.py evidence/runs/2026-08-19-pr3-p1-review-fix-0002/04-test/evidence-manifest.json",
+      "verdict": "PASS",
+      "exit_status": 0,
+      "checked_artifacts": 23,
+      "checker": {
+        "path": "scripts/verify_evidence_manifest.py",
+        "sha256": "ee943aab51513797ad866341860e8bc69a7d26667726391e7d01c79f05e8d3ae",
+        "known_good_accepted": 1,
+        "known_bad_mutations_rejected": 6
+      },
+      "raw_output": "raw/evidence-integrity.stdout.txt"
+    }
   ],
   "checker_qualification": {
     "known_good_accepted": 1,
-    "known_bad_mutations_rejected": 18,
+    "known_bad_mutations_rejected": 21,
     "new_required_mutations_rejected": [
       "POSIX absolute route target inside the current checkout",
       "Windows absolute route target"
+    ],
+    "rendered_markdown_mutations_rejected": [
+      "HTML-commented route table",
+      "fenced-code route table",
+      "indented-code route table"
     ],
     "qualification_state": "QUALIFIED_FOR_INSTRUCTION_ROUTING"
   },
   "trajectory": {
     "scout": "ACCEPTED_SCOPE_BY_HUMAN_DIRECTIVE",
-    "plan": "FROZEN_BY_HUMAN_DIRECTIVE",
-    "build_candidate_commit": "830888e8f0c1db8bbbb745a021c9374b8a46d3b2",
-    "build_handoff_commit": "f9a8ba4cd7ad7dd53ce63b48d5bc35b64a040551",
-    "test": "BLOCKED_PENDING_PLAN_REVISION_2",
-    "review": "BLOCKED",
+    "plan": "REVISION_2_FROZEN_BY_HUMAN_DIRECTIVE",
+    "build_candidate_commit": "f9052ce3f4db8243e8a171a22d0b8f06aebb9d70",
+    "build_handoff_commit": "d09abdc4dc2efb32b7f935fcda617b502578d66a",
+    "test": "PASS",
+    "review": "EXTERNAL_CODEX_REVIEW_REQUIRED",
     "human_merge": "REQUIRED"
   },
   "scope_limits": [
