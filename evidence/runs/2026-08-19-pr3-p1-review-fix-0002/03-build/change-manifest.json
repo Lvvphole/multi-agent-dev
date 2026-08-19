@@ -3,7 +3,7 @@
   "run_id": "2026-08-19-pr3-p1-review-fix-0002",
   "base_commit": "47e903b2b68c8bb9315b54fd3be40b1121bd1dc1",
   "plan_revision": 2,
-  "build_candidate_commit": "PENDING_PUBLICATION",
+  "build_candidate_commit": "f9052ce3f4db8243e8a171a22d0b8f06aebb9d70",
   "frozen_plan_inputs": [
     {"path": "../02-plan/plan.md", "sha256": "a35f06c9b766c70a3da40bc504e3e38d1635c67a18c7a47ada142619d03251ca"},
     {"path": "../02-plan/requirements.json", "sha256": "beaece8d466b3f19a479b0605ffb1efdd848eb2bbbd8943d9bcc4e30fcbf8db5"},
