@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr1-p1-review-fix-0001",
+  "role": "producer candidate checks; not independent acceptance",
+  "checks": [
+    {
+      "id": "DEV-PY-COMPILE",
+      "command": "python3 -m py_compile scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
+      "exit_status": 0,
+      "raw_output": "../04-test/raw/python-compile.stdout.txt"
+    },
+    {
+      "id": "DEV-ROUTE-CHECK",
+      "command": "python3 scripts/verify_instruction_routes.py",
+      "exit_status": 0,
+      "raw_output": "../04-test/raw/instruction-route-check.stdout.txt"
+    },
+    {
+      "id": "DEV-CHECKER-QUALIFICATION",
+      "command": "python3 -m unittest discover -s tests/instructions -p 'test_*.py' -v",
+      "exit_status": 0,
+      "raw_output": "../04-test/raw/instruction-checker-qualification.stdout.txt"
+    },
+    {
+      "id": "DEV-ENGINEERING-RULES",
+      "command": "python3 /root/.codex/skills/remote-skills/skill-6a7bbe3c89448191900ebcdd6395ac7c/scripts/check.py scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
+      "exit_status": 0,
+      "raw_output": "../04-test/raw/engineering-rules.stdout.txt"
+    },
+    {
+      "id": "DEV-EVIDENCE-INTEGRITY",
+      "command": "Python SHA-256 verification of manifest inputs, produced artifacts, and execution outputs",
+      "exit_status": 0,
+      "raw_output": "../04-test/raw/evidence-integrity.stdout.txt"
+    }
+  ],
+  "candidate_result": "PASS",
+  "checker_qualification": {
+    "known_good_accepted": 1,
+    "known_bad_mutations_rejected": 16
+  },
+  "independent_acceptance": "EXTERNAL_PR_REVIEW_REQUIRED"
+}

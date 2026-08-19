@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr3-p1-review-fix-0002",
+  "fitness_functions": [
+    {
+      "id": "FF-ROUTE-ABSOLUTE",
+      "source_requirement": "PR3-P1-ABSOLUTE-003",
+      "characteristic": "portability and deterministic routing",
+      "scope": "local Markdown targets in governed route sources",
+      "trigger": "every change to instruction routes or their checker",
+      "predicate": "Known-good relative routes pass; POSIX and Windows absolute route mutations fail with the absolute-target reason.",
+      "implementation": "unit mutations executed by tests/instructions/test_instruction_routes.py",
+      "evidence_contract": "test names, exact command, raw stdout/stderr, timestamps, exit status, test-file digest",
+      "owner": "Test principal",
+      "failure_action": "BLOCK checker qualification and promotion"
+    },
+    {
+      "id": "FF-ROUTE-REGRESSION",
+      "source_requirement": "PR3-REGRESSION-005",
+      "characteristic": "instruction-routing integrity",
+      "scope": "root routes, implementation routes, and canonical business sequence",
+      "trigger": "every governed repository change",
+      "predicate": "The canonical repository passes and every seeded violation is rejected.",
+      "implementation": "scripts/verify_instruction_routes.py plus the full instruction mutation suite",
+      "evidence_contract": "route-check and unittest raw outputs bound to checker and test digests",
+      "owner": "Test principal",
+      "failure_action": "FAIL and return to Build"
+    },
+    {
+      "id": "FF-STAGE-CONTINUITY",
+      "source_requirement": "PR3-P1-CONTINUITY-004",
+      "characteristic": "evidence admissibility and cross-stage traceability",
+      "scope": "run 0001 historical verdict and run 0002 Scout-to-Test artifacts",
+      "trigger": "before Test verdict and Review",
+      "predicate": "Missing predecessor inputs produce BLOCKED; the replacement run contains and digest-binds every required predecessor artifact.",
+      "implementation": "manifest SHA-256 verification and explicit predecessor inventory",
+      "evidence_contract": "artifact paths, SHA-256 values, integrity command, raw result, and overall verdict",
+      "owner": "Review principal",
+      "failure_action": "BLOCK promotion"
+    },
+    {
+      "id": "FF-ENGINEERING-RULES",
+      "source_requirement": "PR3-REGRESSION-005",
+      "characteristic": "clean implementation",
+      "scope": "changed Python checker and tests",
+      "trigger": "every Build candidate",
+      "predicate": "The canonical engineering checker returns zero blocking and zero review findings.",
+      "implementation": "canonical 51-rule mechanical checker",
+      "evidence_contract": "exact command, checker digest, raw output, timestamps, exit status",
+      "owner": "Build and Test principals",
+      "failure_action": "Return to Build"
+    },
+    {
+      "id": "FF-RENDERED-ROUTES",
+      "source_requirement": "PR3-P1-RENDERED-006",
+      "characteristic": "rendered instruction availability",
+      "scope": "governed local route declarations",
+      "trigger": "every route-checker or governed Markdown change",
+      "predicate": "Bindings hidden in HTML comments or fenced code do not satisfy required-route bindings.",
+      "implementation": "rendered-Markdown line filter plus two independent mutation tests",
+      "evidence_contract": "exact unittest command, raw output, timestamps, test digest",
+      "owner": "Test principal",
+      "failure_action": "BLOCK checker qualification"
+    },
+    {
+      "id": "FF-EVIDENCE-MANIFEST",
+      "source_requirement": "PR3-P1-INTEGRITY-COMMAND-007",
+      "characteristic": "evidence reproducibility and integrity",
+      "scope": "declared paths and SHA-256 values in a Test evidence manifest",
+      "trigger": "every evidence manifest publication",
+      "predicate": "A persisted verifier accepts the known-good run and rejects bad digest, missing file, malformed digest, and repository-escape fixtures.",
+      "implementation": "scripts/verify_evidence_manifest.py with tests/evidence/test_verify_evidence_manifest.py",
+      "evidence_contract": "script digest, exact production and qualification commands, raw outputs, timestamps, exit statuses",
+      "owner": "Test and Review principals",
+      "failure_action": "BLOCK the evidence verdict"
+    }
+  ]
+}

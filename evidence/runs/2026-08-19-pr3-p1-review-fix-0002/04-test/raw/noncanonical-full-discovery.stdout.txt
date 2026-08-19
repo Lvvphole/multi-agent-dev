@@ -1,0 +1,10 @@
+start_utc=2026-08-19T04:03:35Z
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+NO TESTS RAN
+end_utc=2026-08-19T04:03:35Z
+exit_status=5
+classification=INVALID_NONREQUIRED_DIAGNOSTIC
+reason=Python unittest discovery does not recurse into these non-package test subdirectories; the canonical scoped command is the required test contract and passed 19 tests.

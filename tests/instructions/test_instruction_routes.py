@@ -14,6 +14,28 @@ CHECKER_PATH = Path("scripts/verify_instruction_routes.py")
 
 
 class InstructionRouteCheckerTest(unittest.TestCase):
+    def hide_context_route_table(
+        self,
+        root: Path,
+        opening: str,
+        closing: str,
+    ) -> None:
+        contract = root / "AGENTS.md"
+        text = contract.read_text(encoding="utf-8")
+        first_line = "| Trigger | Required route |"
+        last_line = (
+            "| Scout, Plan, Build, Test, Review, sprint execution, or stage "
+            "promotion | [workflows/implementation/CONTEXT.md]"
+            "(workflows/implementation/CONTEXT.md) |"
+        )
+        start = text.index(first_line)
+        end = text.index(last_line, start) + len(last_line)
+        hidden_table = f"{opening}\n{text[start:end]}\n{closing}"
+        contract.write_text(
+            text[:start] + hidden_table + text[end:],
+            encoding="utf-8",
+        )
+
     def run_checker(self, root: Path) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [sys.executable, CHECKER_PATH.as_posix()],
@@ -56,6 +78,189 @@ class InstructionRouteCheckerTest(unittest.TestCase):
             )
 
         self.assert_rejected(mutate, "broken route in AGENTS.md")
+
+    def test_redirected_required_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    "(AGENTS.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_swapped_required_route_targets_are_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    "(authority/ROUTE-SWAP.md)",
+                    1,
+                )
+                .replace(
+                    "(authority/SAFETY.md)",
+                    "(authority/SECURITY.md)",
+                    1,
+                )
+                .replace(
+                    "(authority/ROUTE-SWAP.md)",
+                    "(authority/SAFETY.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_swapped_complete_route_declarations_are_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "[authority/SECURITY.md](authority/SECURITY.md)",
+                    "[route-swap](route-swap)",
+                    1,
+                )
+                .replace(
+                    "[authority/SAFETY.md](authority/SAFETY.md)",
+                    "[authority/SECURITY.md](authority/SECURITY.md)",
+                    1,
+                )
+                .replace(
+                    "[route-swap](route-swap)",
+                    "[authority/SAFETY.md](authority/SAFETY.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_redirected_architecture_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            architecture = root / "ARCHITECTURE.md"
+            text = architecture.read_text(encoding="utf-8")
+            architecture.write_text(
+                text.replace(
+                    "(docs/specs/problem-to-retained-revenue-operating-system.md)",
+                    "(AGENTS.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(
+            mutate,
+            "route binding mismatch in ARCHITECTURE.md",
+        )
+
+    def test_redirected_workflow_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            workflow = root / "workflows" / "implementation" / "CONTEXT.md"
+            text = workflow.read_text(encoding="utf-8")
+            workflow.write_text(
+                text.replace(
+                    "(01-scout/CONTEXT.md)",
+                    "(02-plan/CONTEXT.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(
+            mutate,
+            "route binding mismatch in workflows/implementation/CONTEXT.md",
+        )
+
+    def test_out_of_repository_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            outside_target = root.parent / "outside.md"
+            outside_target.write_text("outside", encoding="utf-8")
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    "(../outside.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route outside repository in AGENTS.md")
+
+    def test_absolute_posix_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            absolute_target = (root / "authority" / "SECURITY.md").as_posix()
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    f"({absolute_target})",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "absolute route target in AGENTS.md")
+
+    def test_absolute_windows_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    "(C:/repository/authority/SECURITY.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "absolute route target in AGENTS.md")
+
+    def test_html_commented_route_table_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            self.hide_context_route_table(root, "<!--", "-->")
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_fenced_route_table_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            self.hide_context_route_table(root, "```markdown", "```")
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_indented_code_route_table_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            first_line = "| Trigger | Required route |"
+            last_line = (
+                "| Scout, Plan, Build, Test, Review, sprint execution, or stage "
+                "promotion | [workflows/implementation/CONTEXT.md]"
+                "(workflows/implementation/CONTEXT.md) |"
+            )
+            start = text.index(first_line)
+            end = text.index(last_line, start) + len(last_line)
+            indented_table = "\n".join(
+                f"    {line}" for line in text[start:end].splitlines()
+            )
+            contract.write_text(
+                text[:start] + indented_table + text[end:],
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
 
     def test_stage_order_change_is_rejected(self) -> None:
         def mutate(root: Path) -> None:
@@ -127,6 +332,27 @@ class InstructionRouteCheckerTest(unittest.TestCase):
             )
 
         self.assert_rejected(mutate, "missing: normalized return path")
+
+    def test_business_canonical_return_sequence_bypass_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            specification = (
+                root
+                / "docs"
+                / "specs"
+                / "problem-to-retained-revenue-operating-system.md"
+            )
+            text = specification.read_text(encoding="utf-8")
+            specification.write_text(
+                text.replace(
+                    "  -> Stage 0 Objective Definition revalidation\n"
+                    "  -> Stage 1 Problem Scouting",
+                    "  -> Stage 1 Problem Scouting",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "business canonical sequence mismatch")
 
     def test_closed_exit_success_conflation_is_rejected(self) -> None:
         def mutate(root: Path) -> None:

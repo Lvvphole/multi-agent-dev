@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr1-p1-review-fix-0001",
+  "repository": "Lvvphole/multi-agent-dev",
+  "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
+  "tested_candidate_commit": "ff3e3e551b4d236c7a3dd05456be7ab4498566c0",
+  "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+  "toolchain": {
+    "python": "CPython 3.12.13",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+    "dependencies": "Python standard library",
+    "raw_evidence": "raw/tool-versions.stdout.txt",
+    "raw_sha256": "cb72446d13afb93fa9360df3997edd03f3988f93acc2fe04daea5dc9f3ca50ac"
+  },
+  "inputs": [
+    {"path": "scripts/verify_instruction_routes.py", "sha256": "9a898a75307a27a7527c80a1aaea5eccaf242a014232f523b6fb3b3e47d4cf97"},
+    {"path": "tests/instructions/test_instruction_routes.py", "sha256": "8acfd1248912f11da79152a8993735fa5d0af79ef2e01b11aa7720aea7a117c3"},
+    {"source": "PR #1 review thread", "identity": "PRRT_kwDOT3jdV86aVDTp", "requirement": "PR1-P1-ROUTE-001"},
+    {"source": "PR #1 review thread", "identity": "PRRT_kwDOT3jdV86aVDTr", "requirement": "PR1-P1-SEQUENCE-001"},
+    {"source": "PR #3 review thread", "identity": "PRRT_kwDOT3jdV86aVpD1", "requirement": "PR3-P1-ROUTE-BINDING-002"},
+    {"source": "PR #3 review thread", "identity": "PRRT_kwDOT3jdV86aVpD6", "requirement": "PR3-P1-EVIDENCE-001"}
+  ],
+  "executions": [
+    {
+      "id": "PY-COMPILE",
+      "command": "python3 -m py_compile scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T03:42:28Z",
+      "ended_at": "2026-08-19T03:42:29Z",
+      "exit_status": 0,
+      "stdout": {"path": "raw/python-compile.stdout.txt", "sha256": "59d2d6dc10d0fba90025a331c07c47733cb5256404cf8838cb553f35c5267bc9"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "verdict": "PASS"
+    },
+    {
+      "id": "INSTRUCTION-ROUTING",
+      "command": "python3 scripts/verify_instruction_routes.py",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T03:42:33Z",
+      "ended_at": "2026-08-19T03:42:34Z",
+      "exit_status": 0,
+      "stdout": {"path": "raw/instruction-route-check.stdout.txt", "sha256": "8f6259014f6c5ef2faa6b68ca4027e252cc3613aab37a46b0a99a594890c9ce1"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "instruction-routing", "sha256": "9a898a75307a27a7527c80a1aaea5eccaf242a014232f523b6fb3b3e47d4cf97", "qualification": "QUALIFIED_FOR_INSTRUCTION_ROUTING"},
+      "verdict": "PASS"
+    },
+    {
+      "id": "CHECKER-QUALIFICATION",
+      "command": "python3 -m unittest discover -s tests/instructions -p 'test_*.py' -v",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T03:42:38Z",
+      "ended_at": "2026-08-19T03:42:39Z",
+      "exit_status": 0,
+      "stdout": {"path": "raw/instruction-checker-qualification.stdout.txt", "sha256": "131b2aa17700cec279866bf2f50d43025dd38408faab329b43de8e455ec913ec"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "unittest", "version": "Python 3.12.13", "test_sha256": "8acfd1248912f11da79152a8993735fa5d0af79ef2e01b11aa7720aea7a117c3"},
+      "qualification": {"known_good_accepted": 1, "known_bad_mutations_rejected": 16},
+      "verdict": "PASS"
+    },
+    {
+      "id": "ENGINEERING-RULES",
+      "command": "python3 /root/.codex/skills/remote-skills/skill-6a7bbe3c89448191900ebcdd6395ac7c/scripts/check.py scripts/verify_instruction_routes.py tests/instructions/test_instruction_routes.py",
+      "working_directory": "/workspace/scratch/568159e64489/repo_draft",
+      "started_at": "2026-08-19T03:42:44Z",
+      "ended_at": "2026-08-19T03:42:44Z",
+      "exit_status": 0,
+      "stdout": {"path": "raw/engineering-rules.stdout.txt", "sha256": "87c02cef7d3da268ca412b09bfebad5f39208fcaf42737ce2564a0ab3da21bb6"},
+      "stderr": "redirected unedited to stdout by 2>&1",
+      "checker": {"id": "canonical-51-rule-engineering-check", "sha256": "2a40bb5e7692ee949e4a2e8b831c278a29bd845559f6c56c9286fdd30a10b18e"},
+      "blocking_findings": 0,
+      "review_findings": 0,
+      "verdict": "PASS"
+    }
+  ],
+  "integrity_verification": {
+    "method": "SHA-256 over repository inputs, produced artifacts, and execution stdout entries declared by this manifest",
+    "started_at": "2026-08-19T03:47:44Z",
+    "ended_at": "2026-08-19T03:47:44Z",
+    "exit_status": 0,
+    "checked_artifacts": 14,
+    "raw_output": {
+      "path": "raw/evidence-integrity.stdout.txt",
+      "sha256": "69da4d349ddc07fe693a80ed9d86d9c80c9dcd0eedff670024b1a72de67f2791"
+    },
+    "scope_note": "The verifier's own raw report is excluded from the checked set to avoid self-reference.",
+    "verdict": "PASS"
+  },
+  "produced_artifacts": [
+    {"path": "../03-build/change-manifest.json", "sha256": "269c295309f381008fbd1c1125c878c9b9964ef5e5c67c63c21001ed1bc4d686"},
+    {"path": "../03-build/developer-checks.json", "sha256": "160332c1057105c04dfd8881487606fc5375e34d6e15392821967e1676c72047"},
+    {"path": "test-report.json", "sha256": "58498dd082bb4f3b35321c38dbc31c03b64f25c5db6cceffcac91350f684dba1"},
+    {"path": "raw/python-compile.stdout.txt", "sha256": "59d2d6dc10d0fba90025a331c07c47733cb5256404cf8838cb553f35c5267bc9"},
+    {"path": "raw/instruction-route-check.stdout.txt", "sha256": "8f6259014f6c5ef2faa6b68ca4027e252cc3613aab37a46b0a99a594890c9ce1"},
+    {"path": "raw/instruction-checker-qualification.stdout.txt", "sha256": "131b2aa17700cec279866bf2f50d43025dd38408faab329b43de8e455ec913ec"},
+    {"path": "raw/engineering-rules.stdout.txt", "sha256": "87c02cef7d3da268ca412b09bfebad5f39208fcaf42737ce2564a0ab3da21bb6"},
+    {"path": "raw/tool-versions.stdout.txt", "sha256": "cb72446d13afb93fa9360df3997edd03f3988f93acc2fe04daea5dc9f3ca50ac"}
+  ],
+  "engineering_manual_review": [
+    {"rule": "REQ-001", "evidence": "03-build/change-manifest.json:7-37"},
+    {"rule": "REQ-005", "evidence": "03-build/change-manifest.json:43-46"},
+    {"rule": "REQ-006", "evidence": "04-test/test-report.json:8 and 51-55"},
+    {"rule": "REQ-007", "evidence": "03-build/change-manifest.json:12-69; scripts/verify_instruction_routes.py:91-201; tests/instructions/test_instruction_routes.py:60-268"},
+    {"rule": "SC-001", "evidence": "scripts/verify_instruction_routes.py:98-201 and 252-294"},
+    {"rule": "SC-002", "evidence": "03-build/change-manifest.json:43"},
+    {"rule": "SC-003", "evidence": "scripts/verify_instruction_routes.py:176-201"},
+    {"rule": "SC-004", "evidence": "scripts/verify_instruction_routes.py:91-201"},
+    {"rule": "SC-005", "evidence": "scripts/verify_instruction_routes.py:91-201"},
+    {"rule": "SC-007", "evidence": "scripts/verify_instruction_routes.py:2"},
+    {"rule": "RT-004", "evidence": "tests/instructions/test_instruction_routes.py:60-268"},
+    {"rule": "RT-008", "evidence": "tests/instructions/test_instruction_routes.py:60-176 and 249-268"},
+    {"rule": "RT-009", "evidence": "04-test/raw/instruction-checker-qualification.stdout.txt:2-18"},
+    {"rule": "AD-004", "evidence": "tests/instructions/test_instruction_routes.py:45-49"},
+    {"rule": "PY-002", "evidence": "scripts/verify_instruction_routes.py:2 and 176-201"}
+  ],
+  "overall": {
+    "candidate_verdict": "BLOCKED",
+    "checker_qualification": "QUALIFIED_FOR_INSTRUCTION_ROUTING",
+    "independent_code_review": "BLOCKED",
+    "blocked_reasons": [
+      "Accepted Scout artifacts are absent.",
+      "Frozen Plan artifacts are absent.",
+      "This historical run is superseded by 2026-08-19-pr3-p1-review-fix-0002."
+    ],
+    "human_merge": "REQUIRED"
+  }
+}

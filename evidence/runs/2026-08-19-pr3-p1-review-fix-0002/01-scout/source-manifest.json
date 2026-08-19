@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr3-p1-review-fix-0002",
+  "repository": "Lvvphole/multi-agent-dev",
+  "observed_commits": [
+    "94b8cb24d8e033a4e08e11656343c1989c2c9c20",
+    "47e903b2b68c8bb9315b54fd3be40b1121bd1dc1"
+  ],
+  "observed_at": "2026-08-19T04:08:23Z",
+  "human_authority": {
+    "principal": "Lvvphole",
+    "decision": "ACCEPTED_SCOPE_BY_DIRECTIVE",
+    "scope": "Fix every Codex review issue and continue until Codex reports no major issues; merge is not authorized."
+  },
+  "repository_sources": [
+    {"path": "AGENTS.md", "sha256": "f36927fa21ac14e904e23c17f07af9b76eac23f313e2ef6313a0caabf4464c9e"},
+    {"path": "authority/VERIFICATION.md", "sha256": "9136b7688641ef9ec549b66078b50c7361aefed77ef51faf3de18ad059db3b87"},
+    {"path": "workflows/implementation/CONTEXT.md", "sha256": "e3c95d5e7e07658af06dd40603cc958ed7ac6ccf206e2f0ec032f75529d4e45b"},
+    {"path": "workflows/implementation/01-scout/CONTEXT.md", "sha256": "0585046ba80c772985aa9b722eb7f865f53fbb639052dbf3351df8bb2dcc1811"},
+    {"path": "workflows/implementation/02-plan/CONTEXT.md", "sha256": "5b67056d61a8642e63d32b6ef7698a10a3137fc71c86155b50767a383ed137e5"},
+    {"path": "workflows/implementation/03-build/CONTEXT.md", "sha256": "291a3de64268938b971f3b115f82fd9fe55f77a4b4c9766d487f93c53f24f730"},
+    {"path": "workflows/implementation/04-test/CONTEXT.md", "sha256": "157560cb072858938dc417354b7a115bdd4feaa916b7eb0598914f87508d3ea7"},
+    {"path": "scripts/verify_instruction_routes.py", "sha256": "2584cfb3e771bfbc632823d3b950c0859dbf79d587456b9e749eecffa9a1abaf"},
+    {"path": "tests/instructions/test_instruction_routes.py", "sha256": "b2d08f27e33da3c05ab0321eefffd8eca99d90c4c2329e0bcfbcbde044ea6e5f"}
+  ],
+  "review_sources": [
+    {
+      "pull_request": 3,
+      "reviewed_commit": "94b8cb24d8e033a4e08e11656343c1989c2c9c20",
+      "thread_id": "PRRT_kwDOT3jdV86aVzHN",
+      "comment_id": "PRRC_kwDOT3jdV87jFslX",
+      "url": "https://github.com/Lvvphole/multi-agent-dev/pull/3#discussion_r3809921367",
+      "severity": "P1",
+      "status": "UNRESOLVED"
+    },
+    {
+      "pull_request": 3,
+      "reviewed_commit": "94b8cb24d8e033a4e08e11656343c1989c2c9c20",
+      "thread_id": "PRRT_kwDOT3jdV86aVzHP",
+      "comment_id": "PRRC_kwDOT3jdV87jFslZ",
+      "url": "https://github.com/Lvvphole/multi-agent-dev/pull/3#discussion_r3809921369",
+      "severity": "P1",
+      "status": "UNRESOLVED"
+    },
+    {
+      "pull_request": 3,
+      "reviewed_commit": "47e903b2b68c8bb9315b54fd3be40b1121bd1dc1",
+      "thread_id": "PRRT_kwDOT3jdV86aV76u",
+      "comment_id": "PRRC_kwDOT3jdV87jF5zY",
+      "url": "https://github.com/Lvvphole/multi-agent-dev/pull/3#discussion_r3809975512",
+      "severity": "P1",
+      "status": "UNRESOLVED"
+    },
+    {
+      "pull_request": 3,
+      "reviewed_commit": "47e903b2b68c8bb9315b54fd3be40b1121bd1dc1",
+      "thread_id": "PRRT_kwDOT3jdV86aV76x",
+      "comment_id": "PRRC_kwDOT3jdV87jF5zf",
+      "url": "https://github.com/Lvvphole/multi-agent-dev/pull/3#discussion_r3809975519",
+      "severity": "P1",
+      "status": "UNRESOLVED"
+    }
+  ],
+  "unknowns": [
+    "The next Codex review result is not known until the repaired head is submitted.",
+    "Human merge decision remains pending."
+  ]
+}

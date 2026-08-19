@@ -5,7 +5,8 @@ from __future__ import annotations
 
 import re
 import sys
-from pathlib import Path
+from collections import Counter
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,8 +14,6 @@ ROOT_CONTRACT_NAME = "AGENTS.md"
 ROOT_OVERRIDE_NAME = "AGENTS.override.md"
 CONTEXT_NAME = "CONTEXT.md"
 ROOT_CONTRACT = ROOT / ROOT_CONTRACT_NAME
-ARCHITECTURE_REFERENCE = ROOT / "ARCHITECTURE.md"
-WORKFLOW_ROUTER = ROOT / "workflows" / "implementation" / CONTEXT_NAME
 BUSINESS_OPERATING_SPEC = (
     ROOT / "docs" / "specs" / "problem-to-retained-revenue-operating-system.md"
 )
@@ -38,6 +37,10 @@ EXPECTED_BUSINESS_STAGES = (
     "Implementation",
     "Value Realization",
     "Retention and Expansion",
+)
+EXPECTED_CANONICAL_SEQUENCE = tuple(enumerate(EXPECTED_BUSINESS_STAGES)) + (
+    (0, "Objective Definition revalidation"),
+    (1, "Problem Scouting"),
 )
 REQUIRED_STAGE_HEADINGS = (
     "## Inputs",
@@ -76,18 +79,203 @@ REQUIRED_BUSINESS_MARKERS = (
         "software-delivery boundary",
     ),
 )
-LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+LINK_PATTERN = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 BUSINESS_STAGE_PATTERN = re.compile(r"^\| (\d+) \| ([^|]+?) \|", re.MULTILINE)
+CANONICAL_SEQUENCE_PATTERN = re.compile(
+    r"The canonical sequence is:\s*```text\n(?P<body>.*?)\n```",
+    re.DOTALL,
+)
+CANONICAL_STAGE_LINE_PATTERN = re.compile(r"(?:->\s+)?Stage (\d+) (.+)")
+FENCE_OPEN_PATTERN = re.compile(r"^[ \t]{0,3}(?P<marker>`{3,}|~{3,})")
 
 
-def local_links(path: Path) -> list[Path]:
-    links: list[Path] = []
-    for target in LINK_PATTERN.findall(path.read_text(encoding="utf-8")):
-        if "://" in target or target.startswith("#"):
+def path_label_binding(
+    declaration: str,
+    target: str,
+) -> tuple[str, str, str]:
+    return declaration, target, target
+
+
+def is_absolute_route_target(target: str) -> bool:
+    return PurePosixPath(target).is_absolute() or PureWindowsPath(target).is_absolute()
+
+
+def strip_html_comments(line: str, in_comment: bool) -> tuple[str, bool]:
+    visible: list[str] = []
+    cursor = 0
+    while cursor < len(line):
+        if in_comment:
+            comment_end = line.find("-->", cursor)
+            if comment_end == -1:
+                return "".join(visible), True
+            cursor = comment_end + 3
+            in_comment = False
             continue
-        clean_target = target.split("#", 1)[0]
-        links.append((path.parent / clean_target).resolve())
-    return links
+
+        comment_start = line.find("<!--", cursor)
+        if comment_start == -1:
+            visible.append(line[cursor:])
+            break
+        visible.append(line[cursor:comment_start])
+        cursor = comment_start + 4
+        in_comment = True
+
+    return "".join(visible), in_comment
+
+
+def rendered_markdown_lines(markdown: str) -> tuple[str, ...]:
+    visible_lines: list[str] = []
+    in_comment = False
+    fence_character: str | None = None
+    fence_length = 0
+
+    for raw_line in markdown.splitlines():
+        if fence_character is not None:
+            closing_fence = re.fullmatch(
+                rf"[ \t]{{0,3}}{re.escape(fence_character)}{{{fence_length},}}[ \t]*",
+                raw_line,
+            )
+            if closing_fence is not None:
+                fence_character = None
+                fence_length = 0
+            continue
+
+        line, in_comment = strip_html_comments(raw_line, in_comment)
+        if line.startswith("    ") or line.startswith("\t"):
+            continue
+        opening_fence = FENCE_OPEN_PATTERN.match(line)
+        if opening_fence is not None:
+            marker = opening_fence.group("marker")
+            fence_character = marker[0]
+            fence_length = len(marker)
+            continue
+        visible_lines.append(line)
+
+    return tuple(visible_lines)
+
+
+EXPECTED_ROUTE_BINDINGS = {
+    ROOT_CONTRACT_NAME: (
+        path_label_binding(
+            "| Architecture, boundaries, topology, data ownership, control flow, or runtime design |",
+            "ARCHITECTURE.md",
+        ),
+        path_label_binding(
+            "| Identity, authority, capabilities, A2A trust, secrets, or external effects |",
+            "authority/SECURITY.md",
+        ),
+        path_label_binding(
+            "| Destructive action, safety constraint, approval, reversibility, or escalation |",
+            "authority/SAFETY.md",
+        ),
+        path_label_binding(
+            "| Context, retrieval, durable memory, provenance, freshness, or inheritance |",
+            "authority/MEMORY.md",
+        ),
+        path_label_binding(
+            "| Tests, checkers, evidence, acceptance, completion, or release claims |",
+            "authority/VERIFICATION.md",
+        ),
+        path_label_binding(
+            "| Enterprise goal, client state, customer gap, value cycle, revenue, retention, business stage, or operating metric |",
+            "docs/specs/problem-to-retained-revenue-operating-system.md",
+        ),
+        path_label_binding(
+            "| Scout, Plan, Build, Test, Review, sprint execution, or stage promotion |",
+            "workflows/implementation/CONTEXT.md",
+        ),
+    ),
+    "ARCHITECTURE.md": (
+        (
+            "Build a governed multi-agent organization that implements the",
+            "Problem-to-Retained-Revenue Operating System",
+            "docs/specs/problem-to-retained-revenue-operating-system.md",
+        ),
+        (
+            "-",
+            "ADR-0001 - Authoritative AGENTS.md with ICM context routing",
+            "docs/adr/0001-authoritative-agents-and-icm-routing.md",
+        ),
+        (
+            "-",
+            "ADR-0002 - Problem-to-Retained-Revenue organizational objective",
+            "docs/adr/0002-problem-to-retained-revenue-organizational-objective.md",
+        ),
+    ),
+    "workflows/implementation/CONTEXT.md": (
+        (
+            "| 01 | Scout | Establish evidence-backed current state and uncertainty |",
+            "01-scout/CONTEXT.md",
+            "workflows/implementation/01-scout/CONTEXT.md",
+        ),
+        (
+            "| 02 | Plan | Bind requirements, data, fitness functions, and the smallest implementation slice |",
+            "02-plan/CONTEXT.md",
+            "workflows/implementation/02-plan/CONTEXT.md",
+        ),
+        (
+            "| 03 | Build | Implement only the accepted slice |",
+            "03-build/CONTEXT.md",
+            "workflows/implementation/03-build/CONTEXT.md",
+        ),
+        (
+            "| 04 | Test | Independently execute and preserve verification evidence |",
+            "04-test/CONTEXT.md",
+            "workflows/implementation/04-test/CONTEXT.md",
+        ),
+        (
+            "| 05 | Review | Adjudicate compliance and promotion readiness |",
+            "05-review/CONTEXT.md",
+            "workflows/implementation/05-review/CONTEXT.md",
+        ),
+    ),
+}
+
+
+def local_route_bindings(
+    path: Path,
+    errors: list[str],
+) -> tuple[tuple[str, str, str], ...]:
+    source = path.relative_to(ROOT).as_posix()
+    bindings: list[tuple[str, str, str]] = []
+    markdown = path.read_text(encoding="utf-8")
+    for line in rendered_markdown_lines(markdown):
+        for link in LINK_PATTERN.finditer(line):
+            label, target = link.groups()
+            if "://" in target or target.startswith("#"):
+                continue
+            clean_target = target.split("#", 1)[0]
+            if is_absolute_route_target(clean_target):
+                errors.append(f"absolute route target in {source}: {target}")
+                continue
+            resolved_target = (path.parent / clean_target).resolve()
+            try:
+                repository_target = resolved_target.relative_to(ROOT)
+            except ValueError:
+                errors.append(f"route outside repository in {source}: {target}")
+                continue
+
+            repository_target_text = repository_target.as_posix()
+            declaration = line[: link.start()].strip()
+            bindings.append((declaration, label, repository_target_text))
+            if not resolved_target.is_file():
+                errors.append(f"broken route in {source}: {repository_target_text}")
+
+    return tuple(bindings)
+
+
+def canonical_business_sequence(business_text: str) -> tuple[tuple[int, str], ...]:
+    block = CANONICAL_SEQUENCE_PATTERN.search(business_text)
+    if block is None:
+        return ()
+
+    sequence: list[tuple[int, str]] = []
+    for line in block.group("body").splitlines():
+        stage = CANONICAL_STAGE_LINE_PATTERN.fullmatch(line.strip())
+        if stage is None:
+            return ()
+        sequence.append((int(stage.group(1)), stage.group(2)))
+    return tuple(sequence)
 
 
 def main() -> int:
@@ -122,17 +310,18 @@ def main() -> int:
             + ", ".join(discovered_instruction_files)
         )
 
-    route_sources = [ROOT_CONTRACT, ARCHITECTURE_REFERENCE, WORKFLOW_ROUTER]
-    for source in route_sources:
+    for source_name, expected_bindings in EXPECTED_ROUTE_BINDINGS.items():
+        source = ROOT / source_name
         if not source.is_file():
             errors.append(f"missing route source: {source.relative_to(ROOT)}")
             continue
-        for target in local_links(source):
-            if not target.exists():
-                errors.append(
-                    f"broken route in {source.relative_to(ROOT)}: "
-                    f"{target.relative_to(ROOT)}"
-                )
+        actual_bindings = local_route_bindings(source, errors)
+        if Counter(actual_bindings) != Counter(expected_bindings):
+            errors.append(
+                f"route binding mismatch in {source_name}: "
+                f"expected {tuple(sorted(expected_bindings))}, "
+                f"got {tuple(sorted(actual_bindings))}"
+            )
 
     if not BUSINESS_OPERATING_SPEC.is_file():
         errors.append(
@@ -154,6 +343,14 @@ def main() -> int:
             errors.append(
                 "business stage order mismatch: "
                 f"expected {expected_business_stages}, got {actual_business_stages}"
+            )
+
+        actual_canonical_sequence = canonical_business_sequence(business_text)
+        if actual_canonical_sequence != EXPECTED_CANONICAL_SEQUENCE:
+            errors.append(
+                "business canonical sequence mismatch: "
+                f"expected {EXPECTED_CANONICAL_SEQUENCE}, "
+                f"got {actual_canonical_sequence}"
             )
 
     stages_root = ROOT / "workflows" / "implementation"
