@@ -1,0 +1,15 @@
+start_utc=2026-08-19T04:16:05Z
+test_absolute_artifact_path_is_rejected (test_verify_evidence_manifest.EvidenceManifestVerifierTest.test_absolute_artifact_path_is_rejected) ... ok
+test_digest_mismatch_is_rejected (test_verify_evidence_manifest.EvidenceManifestVerifierTest.test_digest_mismatch_is_rejected) ... ok
+test_empty_manifest_is_rejected (test_verify_evidence_manifest.EvidenceManifestVerifierTest.test_empty_manifest_is_rejected) ... ok
+test_known_good_manifest_is_accepted (test_verify_evidence_manifest.EvidenceManifestVerifierTest.test_known_good_manifest_is_accepted) ... ok
+test_malformed_digest_is_rejected (test_verify_evidence_manifest.EvidenceManifestVerifierTest.test_malformed_digest_is_rejected) ... ok
+test_missing_artifact_is_rejected (test_verify_evidence_manifest.EvidenceManifestVerifierTest.test_missing_artifact_is_rejected) ... ok
+test_repository_escape_is_rejected (test_verify_evidence_manifest.EvidenceManifestVerifierTest.test_repository_escape_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.203s
+
+OK
+end_utc=2026-08-19T04:16:06Z
+exit_status=0

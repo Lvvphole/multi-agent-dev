@@ -1,9 +1,9 @@
-start_utc=2026-08-19T04:00:01Z
-GATES — 2 file(s), 0 blocking, 0 to review
+start_utc=2026-08-19T04:16:13Z
+GATES — 4 file(s), 0 blocking, 0 to review
 
   no mechanical violations found
 
-CHECKLIST — 15 rule(s) in scope (python)
+CHECKLIST — 17 rule(s) in scope (python)
   Answer each with file:line evidence. The proposer does not
   accept its own answers (AE-002).
 
@@ -17,13 +17,15 @@ CHECKLIST — 15 rule(s) in scope (python)
   [ ] SC-004  Names are intention-revealing, and one concept keeps one name.
   [ ] SC-005  Each unit sits at one coherent level of abstraction.
   [ ] SC-007  Comments explain non-obvious intent, not what the code plainly says.
+  [ ] SC-010  Data is validated where it crosses a trust, process, or persistence boundary.
   [ ] RT-004  Changed behavior is verified against the observable contract, not internals.
   [ ] RT-008  Boundaries and failure partitions are exercised, not just the normal path.
   [ ] RT-009  Adequacy rests on behavior-specific evidence, not a coverage number.
+  [ ] RT-010  The real boundary contract is verified, not each side in isolation.
   [ ] AD-004  Compatibility is preserved or an explicit migration exists.
   [ ] PY-002  Contractual exceptions are documented; type facts are not duplicated in docstrings.
 
 Gates passing means the mechanical checks found nothing. It is not
 proof of correctness and does not convert to a score (RT-009).
-end_utc=2026-08-19T04:00:01Z
+end_utc=2026-08-19T04:16:13Z
 exit_status=0

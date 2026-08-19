@@ -1,4 +1,4 @@
-start_utc=2026-08-19T03:59:56Z
+start_utc=2026-08-19T04:16:00Z
 test_absolute_posix_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_absolute_posix_route_is_rejected) ... ok
 test_absolute_windows_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_absolute_windows_route_is_rejected) ... ok
 test_broken_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_broken_route_is_rejected) ... ok
@@ -6,6 +6,9 @@ test_business_canonical_return_sequence_bypass_is_rejected (test_instruction_rou
 test_business_return_path_change_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_business_return_path_change_is_rejected) ... ok
 test_business_stage_change_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_business_stage_change_is_rejected) ... ok
 test_closed_exit_success_conflation_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_closed_exit_success_conflation_is_rejected) ... ok
+test_fenced_route_table_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_fenced_route_table_is_rejected) ... ok
+test_html_commented_route_table_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_html_commented_route_table_is_rejected) ... ok
+test_indented_code_route_table_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_indented_code_route_table_is_rejected) ... ok
 test_known_good_repository_is_accepted (test_instruction_routes.InstructionRouteCheckerTest.test_known_good_repository_is_accepted) ... ok
 test_missing_root_invariant_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_missing_root_invariant_is_rejected) ... ok
 test_missing_stage_heading_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_missing_stage_heading_is_rejected) ... ok
@@ -20,8 +23,8 @@ test_swapped_complete_route_declarations_are_rejected (test_instruction_routes.I
 test_swapped_required_route_targets_are_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_swapped_required_route_targets_are_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 19 tests in 0.473s
+Ran 22 tests in 0.623s
 
 OK
-end_utc=2026-08-19T03:59:57Z
+end_utc=2026-08-19T04:16:01Z
 exit_status=0
