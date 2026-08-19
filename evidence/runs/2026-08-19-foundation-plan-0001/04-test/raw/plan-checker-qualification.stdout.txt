@@ -1,0 +1,18 @@
+start_utc=2026-08-19T02:58:15Z
+test_changed_runtime_path_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_changed_runtime_path_is_rejected) ... ok
+test_critical_checker_without_negative_control_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_critical_checker_without_negative_control_is_rejected) ... ok
+test_known_good_fixture_is_accepted (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_known_good_fixture_is_accepted) ... ok
+test_missing_common_record_field_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_missing_common_record_field_is_rejected) ... ok
+test_missing_human_gate_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_missing_human_gate_is_rejected) ... ok
+test_missing_problem_validation_gate_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_missing_problem_validation_gate_is_rejected) ... ok
+test_missing_source_binding_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_missing_source_binding_is_rejected) ... ok
+test_production_scope_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_production_scope_is_rejected) ... ok
+test_unblocked_implementation_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_unblocked_implementation_is_rejected) ... ok
+test_uncovered_requirement_is_rejected (test_foundation_plan_checker.FoundationPlanCheckerQualificationTests.test_uncovered_requirement_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.021s
+
+OK
+end_utc=2026-08-19T02:58:15Z
+exit_status=0

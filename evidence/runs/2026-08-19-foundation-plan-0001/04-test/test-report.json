@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-foundation-plan-0001",
+  "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
+  "tested_subject": "Candidate Plan: Objective-to-Verified-Problem Foundation",
+  "automated_verification_verdict": "PASS",
+  "plan_acceptance": "BLOCKED",
+  "implementation_gate": "BLOCKED",
+  "verdict_scope": "Structural conformance and checker sensitivity of the Plan artifacts only",
+  "why_acceptance_is_blocked": [
+    "The plan producer is not an independent acceptance verifier.",
+    "MG-PTRR-001 through MG-PTRR-004 are OPEN.",
+    "DEC-PTRR-001 through DEC-PTRR-005 are UNRESOLVED at their recorded gates.",
+    "No future runtime contract, transition, authority, persistence, or concurrency behavior has been implemented or tested."
+  ],
+  "checks": [
+    {
+      "id": "CHK-PLAN-STRUCTURE",
+      "result": "PASS",
+      "exit_status": 0,
+      "evidence": "04-test/raw/plan-structure.stdout.txt",
+      "meaning": "The actual Plan artifact set satisfies the encoded structural predicates and planning-only changed-path declaration."
+    },
+    {
+      "id": "CHK-PLAN-CHECKER-QUALIFICATION",
+      "result": "PASS",
+      "exit_status": 0,
+      "evidence": "04-test/raw/plan-checker-qualification.stdout.txt",
+      "meaning": "The independent known-good fixture was accepted and all nine structural mutations plus one changed-runtime-path mutation were rejected."
+    },
+    {
+      "id": "CHK-INSTRUCTION-ROUTES",
+      "result": "PASS",
+      "exit_status": 0,
+      "evidence": "04-test/raw/instruction-route-check.stdout.txt",
+      "meaning": "The merged authoritative route, five software stages, and 12 business stages still conform."
+    },
+    {
+      "id": "CHK-INSTRUCTION-CHECKER-QUALIFICATION",
+      "result": "PASS",
+      "exit_status": 0,
+      "evidence": "04-test/raw/instruction-checker-qualification.stdout.txt",
+      "meaning": "The existing route checker accepted its known-good and rejected all nine declared mutations."
+    },
+    {
+      "id": "CHK-PYTHON-COMPILE",
+      "result": "PASS",
+      "exit_status": 0,
+      "evidence": "04-test/raw/python-compile.stdout.txt",
+      "meaning": "The new checker and qualification test compile under CPython 3.12.13."
+    },
+    {
+      "id": "CHK-ENGINEERING-RULES",
+      "result": "PASS_WITH_REVIEW_ITEMS",
+      "exit_status": 0,
+      "evidence": "04-test/raw/engineering-rules.stdout.txt",
+      "meaning": "The mechanical gate reported zero blocking findings and six SC-006 repeated-literal review items."
+    }
+  ],
+  "checker_qualification": {
+    "checker_id": "foundation-plan-structure",
+    "checker_version": "1.0.0",
+    "checker_sha256": "05491f9cef519a04748b5aefbb8224b96ce768600acb80a39407df05dec79d7f",
+    "fixture_relationship": "The qualification fixture is constructed independently in the test module and does not copy the actual Plan artifacts.",
+    "known_good_accepted": 1,
+    "required_negatives_rejected": 9,
+    "changed_path_negative_rejected": 1,
+    "qualification_state": "QUALIFIED_FOR_PLAN_STRUCTURE_ONLY"
+  },
+  "negative_controls": [
+    {"id": "NC-PLAN-001", "mutation": "changed runtime path", "detected": true},
+    {"id": "NC-PLAN-002", "mutation": "critical checker without a negative control", "detected": true},
+    {"id": "NC-PLAN-003", "mutation": "missing common operating-record field", "detected": true},
+    {"id": "NC-PLAN-004", "mutation": "missing human gate", "detected": true},
+    {"id": "NC-PLAN-005", "mutation": "missing Stage 2 validation gate", "detected": true},
+    {"id": "NC-PLAN-006", "mutation": "missing requirement source binding", "detected": true},
+    {"id": "NC-PLAN-007", "mutation": "production implementation allowed", "detected": true},
+    {"id": "NC-PLAN-008", "mutation": "implementation unblocked with unresolved decisions", "detected": true},
+    {"id": "NC-PLAN-009", "mutation": "requirement not covered", "detected": true}
+  ],
+  "engineering_rule_review": {
+    "status": "PENDING_INDEPENDENT_REVIEW",
+    "sc_006_disposition": "The repeated strings are exact external artifact keys, stable IDs, and schema field names. Centralizing them further would couple independent boundary validators and make the artifact contract less visible. Mutation tests and input digests detect drift. This producer disposition is not acceptance.",
+    "manual_checklist_evidence": [
+      {"rule": "REQ-001", "evidence": "01-scout/findings.md:4 and 01-scout/source-manifest.json:8"},
+      {"rule": "REQ-005", "evidence": "02-plan/plan.md:93-111"},
+      {"rule": "REQ-006", "evidence": "02-plan/input-manifest.json:79-124"},
+      {"rule": "REQ-007", "evidence": "02-plan/requirements.json:7-14 and 02-plan/fitness-functions.json:7-24"},
+      {"rule": "SC-001", "evidence": "02-plan/plan.md:9-24"},
+      {"rule": "SC-002", "evidence": "02-plan/plan.md:26-36 and 93-111"},
+      {"rule": "SC-003", "evidence": "scripts/verify_foundation_plan.py:139-822"},
+      {"rule": "SC-004", "evidence": "scripts/verify_foundation_plan.py:24-102"},
+      {"rule": "SC-005", "evidence": "scripts/verify_foundation_plan.py:115-822"},
+      {"rule": "SC-007", "evidence": "scripts/verify_foundation_plan.py:2-5"},
+      {"rule": "SC-010", "evidence": "scripts/verify_foundation_plan.py:115-124 and 201-787"},
+      {"rule": "RT-004", "evidence": "tests/plans/test_foundation_plan_checker.py:380-450"},
+      {"rule": "RT-008", "evidence": "tests/plans/test_foundation_plan_checker.py:383-450"},
+      {"rule": "RT-009", "evidence": "tests/plans/test_foundation_plan_checker.py:380-450"},
+      {"rule": "RT-010", "evidence": "04-test/raw/plan-structure.stdout.txt:1-14"},
+      {"rule": "AD-004", "evidence": "02-plan/input-manifest.json:62-77 and 04-test/candidate-changed-paths.txt:1-19"},
+      {"rule": "PY-002", "evidence": "scripts/verify_foundation_plan.py:1-5 and 824-830"}
+    ]
+  },
+  "claims_not_established": [
+    "The proposed runtime architecture is correct.",
+    "The state-transition service can be placed without an ADR.",
+    "The five business validation gates have approved domain thresholds.",
+    "The future implementation is merge-ready.",
+    "Any client state change, client value, revenue, retention, or learning has occurred."
+  ],
+  "next_gate": "Independent Review of this planning-only pull request, followed by Lvvphole's Plan acceptance and architecture decisions."
+}

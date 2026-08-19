@@ -1,0 +1,12 @@
+start_utc=2026-08-19T02:58:09Z
+{
+  "authorizes_build": false,
+  "checker_id": "foundation-plan-structure",
+  "checker_version": "1.0.0",
+  "findings": [],
+  "run_id": "2026-08-19-foundation-plan-0001",
+  "scope": "plan artifact structural conformance only",
+  "verdict": "PASS"
+}
+end_utc=2026-08-19T02:58:09Z
+exit_status=0

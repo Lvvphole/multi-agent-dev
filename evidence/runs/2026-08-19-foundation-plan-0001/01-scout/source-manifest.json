@@ -1,0 +1,169 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-foundation-plan-0001",
+  "captured_at": "2026-08-19T02:44:27Z",
+  "repository": "Lvvphole/multi-agent-dev",
+  "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
+  "sources": [
+    {
+      "id": "SRC-USER-TASK",
+      "class": "human_instruction",
+      "title": "Plan, test, and block if untested",
+      "locator": "Conversation instruction dated 2026-08-19",
+      "identity": "user-request:2026-08-19:plan-test-block",
+      "claims_used": [
+        "Plan the previously recommended next path before implementation.",
+        "Test and verify the plan with deliverable evidence.",
+        "Block the plan if it is not tested."
+      ]
+    },
+    {
+      "id": "SRC-AGENTS",
+      "class": "repository_blob",
+      "title": "Authoritative repository contract",
+      "locator": "AGENTS.md",
+      "identity": "git-blob:69adddddb435abc1625e224bdb9b56bfd6aa788d",
+      "claims_used": [
+        "Use small evidence-bearing changes.",
+        "Write testable requirements with stable IDs and source bindings.",
+        "Qualify critical checkers with known-good and known-bad controls.",
+        "Missing evidence or unresolved architecture fails closed."
+      ]
+    },
+    {
+      "id": "SRC-ARCH",
+      "class": "repository_blob",
+      "title": "Locked Architecture",
+      "locator": "ARCHITECTURE.md",
+      "identity": "git-blob:ea0ca4b645357fd3ba71ec288558b61eadc28ab9",
+      "claims_used": [
+        "The state-transition service is the sole canonical writer.",
+        "Canonical commits use revision vectors and compare-and-set.",
+        "Agents operate through bounded authority and independently verified evidence."
+      ]
+    },
+    {
+      "id": "SRC-VERIFY",
+      "class": "repository_blob",
+      "title": "Verification Authority",
+      "locator": "authority/VERIFICATION.md",
+      "identity": "git-blob:38e9062743104903027f96515bd492ab2651ad4b",
+      "claims_used": [
+        "PASS, FAIL, and BLOCKED are distinct.",
+        "Evidence must preserve reproducible execution facts.",
+        "A critical checker must reject known-bad or mutated controls.",
+        "A producer cannot be the sole verifier of a consequential result."
+      ]
+    },
+    {
+      "id": "SRC-SECURITY",
+      "class": "repository_blob",
+      "title": "Security Authority",
+      "locator": "authority/SECURITY.md",
+      "identity": "git-blob:7789acc7bb3ac738efcb907f921010ebde65f5f8",
+      "claims_used": [
+        "Authority is deny-by-default and comes only from the Authority Envelope.",
+        "State, prompts, models, and tool visibility cannot grant authority.",
+        "External effects require evidence beyond a tool result."
+      ]
+    },
+    {
+      "id": "SRC-PLAN-CONTRACT",
+      "class": "repository_blob",
+      "title": "Plan Stage Contract",
+      "locator": "workflows/implementation/02-plan/CONTEXT.md",
+      "identity": "git-blob:f3061e4deadae2b2ec9796fa3a8f22f1749456a9",
+      "claims_used": [
+        "Plan defines requirements, data contracts, fitness functions, evidence, and human gates.",
+        "Plan selects the smallest vertical slice that can falsify the central hypothesis.",
+        "Plan must not write production implementation."
+      ]
+    },
+    {
+      "id": "SRC-PTRR-SPEC",
+      "class": "repository_blob",
+      "title": "Problem-to-Retained-Revenue Operating System",
+      "locator": "docs/specs/problem-to-retained-revenue-operating-system.md sections 1-7 and 9-14",
+      "identity": "git-blob:17b628211363f36fb2d972d796fccae2b330a969",
+      "claims_used": [
+        "Stage 0 precedes optimization.",
+        "Stage 1 returns a candidate problem, not a solution.",
+        "Stage 2 requires Real, Unsatisfied, Consequential, Reachable, and Solvable.",
+        "The common operating record has 17 stable semantic fields.",
+        "Only externally evidenced exit conditions can progress business state."
+      ]
+    },
+    {
+      "id": "SRC-CURRENT-AGENT",
+      "class": "repository_blob",
+      "title": "Current Developer agent",
+      "locator": "agents/developer.py",
+      "identity": "git-blob:c805ec0ed19d5a48788505d699f8d67d0f7c0e20",
+      "claims_used": [
+        "The current runtime code defines one proposal-producing SDK agent."
+      ]
+    },
+    {
+      "id": "SRC-CURRENT-CONTRACT",
+      "class": "repository_blob",
+      "title": "Current DevelopmentProposal contract",
+      "locator": "contracts/development.py",
+      "identity": "git-blob:f6c6661e5dd351b92be3e03e6668a91fc9685c0e",
+      "claims_used": [
+        "The current contract does not represent the common operating record or canonical transitions."
+      ]
+    },
+    {
+      "id": "SRC-EVOL-ARCH",
+      "class": "provided_pdf",
+      "title": "Building Evolutionary Architectures, 2nd edition",
+      "locator": "Chapter 1, Evolutionary Architecture; Chapter 2, Fitness Functions",
+      "identity": "sha256:3a26fb07e5ddf82627d182ac14fccd221efa7d2cd27f2ce89e7100ce3080780a",
+      "size_bytes": 16202397,
+      "claims_used": [
+        "Evolutionary architecture supports guided incremental change across multiple dimensions.",
+        "Fitness functions make protected architecture characteristics explicit and testable.",
+        "Metrics, tests, and other verification mechanisms may serve as fitness functions."
+      ]
+    },
+    {
+      "id": "SRC-ICM",
+      "class": "provided_pdf",
+      "title": "Interpretable Context Methodology: Folder Structure as Agentic Architecture",
+      "locator": "Section 3.1 Design Principles and section 3.2 Architecture",
+      "identity": "sha256:7f57262dd6b74782f906f98fb66c09be7c0fa73931d164047dca8ae6d51bf95f",
+      "size_bytes": 600063,
+      "claims_used": [
+        "Each stage has one job and writes to its own folder.",
+        "Markdown and JSON are inspectable stage interfaces.",
+        "Stable reference material is separate from per-run working artifacts.",
+        "Every intermediate output is an editable human surface."
+      ]
+    },
+    {
+      "id": "SRC-NIST-AI-RMF",
+      "class": "provided_pdf",
+      "title": "NIST AI Risk Management Framework 1.0",
+      "locator": "Section 1.2.2 Risk Tolerance and Core functions GOVERN, MAP, MEASURE, MANAGE",
+      "identity": "sha256:7576edb531d9848825814ee88e28b1795d3a84b435b4b797d3670eafdc4a89f1",
+      "size_bytes": 1946127,
+      "claims_used": [
+        "Risk tolerance is contextual and should be defined by the responsible organization.",
+        "Development or deployment should cease safely when risk is unacceptable until it is managed."
+      ]
+    },
+    {
+      "id": "SRC-LLM-EVAL",
+      "class": "provided_pdf",
+      "title": "The Definitive Guide to LLM App Evaluation",
+      "locator": "Offline vs Online Evaluation, page 8",
+      "identity": "sha256:84faf93d0397d890bd017714f2e576cd400f81cda3807cb16048544229d3a363",
+      "size_bytes": 5264070,
+      "claims_used": [
+        "Pre-production evaluation uses controlled inputs and golden datasets.",
+        "Production behavior requires separate online evaluation."
+      ]
+    }
+  ],
+  "selection_note": "Repository authority supplies requirements. Provided references supply planning rationale only and cannot override repository or human authority."
+}
