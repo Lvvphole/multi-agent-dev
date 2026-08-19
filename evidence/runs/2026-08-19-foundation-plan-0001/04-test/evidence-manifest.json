@@ -3,7 +3,8 @@
   "run_id": "2026-08-19-foundation-plan-0001",
   "repository": "Lvvphole/multi-agent-dev",
   "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
-  "tested_candidate_commit": "PENDING_PUBLICATION",
+  "tested_candidate_commit": "93880d6902c9a4a2fb4f66fd1584685e71c13e45",
+  "tested_candidate_tree": "3bd34c7caf40310293de2189d94af7189dc613a2",
   "tested_candidate_artifact_set": {
     "algorithm": "sha256 of the lexicographically sorted sha256sum lines for the Plan, checker, qualification test, declared path inventory, raw outputs, and test report",
     "sha256": "d98aaa2f0d589392f9cd8fb1244a4562ce49c36447a04ca6433cfc4c3e20bb7a"
