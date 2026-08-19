@@ -70,7 +70,57 @@ class InstructionRouteCheckerTest(unittest.TestCase):
                 encoding="utf-8",
             )
 
-        self.assert_rejected(mutate, "route destination mismatch in AGENTS.md")
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_swapped_required_route_targets_are_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    "(authority/ROUTE-SWAP.md)",
+                    1,
+                )
+                .replace(
+                    "(authority/SAFETY.md)",
+                    "(authority/SECURITY.md)",
+                    1,
+                )
+                .replace(
+                    "(authority/ROUTE-SWAP.md)",
+                    "(authority/SAFETY.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
+
+    def test_swapped_complete_route_declarations_are_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "[authority/SECURITY.md](authority/SECURITY.md)",
+                    "[route-swap](route-swap)",
+                    1,
+                )
+                .replace(
+                    "[authority/SAFETY.md](authority/SAFETY.md)",
+                    "[authority/SECURITY.md](authority/SECURITY.md)",
+                    1,
+                )
+                .replace(
+                    "[route-swap](route-swap)",
+                    "[authority/SAFETY.md](authority/SAFETY.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route binding mismatch in AGENTS.md")
 
     def test_redirected_architecture_route_is_rejected(self) -> None:
         def mutate(root: Path) -> None:
@@ -87,7 +137,7 @@ class InstructionRouteCheckerTest(unittest.TestCase):
 
         self.assert_rejected(
             mutate,
-            "route destination mismatch in ARCHITECTURE.md",
+            "route binding mismatch in ARCHITECTURE.md",
         )
 
     def test_redirected_workflow_route_is_rejected(self) -> None:
@@ -105,7 +155,7 @@ class InstructionRouteCheckerTest(unittest.TestCase):
 
         self.assert_rejected(
             mutate,
-            "route destination mismatch in workflows/implementation/CONTEXT.md",
+            "route binding mismatch in workflows/implementation/CONTEXT.md",
         )
 
     def test_out_of_repository_route_is_rejected(self) -> None:

@@ -3,21 +3,26 @@
   "run_id": "2026-08-19-pr1-p1-review-fix-0001",
   "repository": "Lvvphole/multi-agent-dev",
   "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
-  "source_pull_request": 1,
-  "source_review_commit": "d6469a30c281ed9f2d929196f41bc90c7c8db911",
+  "source_pull_requests": [1, 3],
+  "source_review_commits": [
+    "d6469a30c281ed9f2d929196f41bc90c7c8db911",
+    "a1ff4d3197839ddf65c7553c5fe28eb8373761a7"
+  ],
   "requirements": [
     {
       "id": "PR1-P1-ROUTE-001",
       "review_thread_id": "PRRT_kwDOT3jdV86aVDTp",
       "review_comment_id": "PRRC_kwDOT3jdV87jEkiR",
-      "predicate": "Every required local route resolves to its exact repository-relative destination, no required route is redirected, and no local route escapes the repository.",
-      "implementation": "Replace existence-only link checking with an exact per-router destination multiset and repository-boundary validation.",
+      "predicate": "Every required local route declaration, label, and repository-relative destination has the exact authorized binding; no route is redirected, swapped, duplicated, omitted, or allowed to escape the repository.",
+      "implementation": "Parse each local route into its declaration context, label, and normalized repository destination; compare the resulting binding multiset with the exact authorized bindings and enforce repository boundaries.",
       "verification": [
         "known-good repository passes",
         "broken route fails",
         "redirected AGENTS.md route fails",
         "redirected ARCHITECTURE.md route fails",
         "redirected workflow route fails",
+        "two existing required route targets swapped in place fail",
+        "two complete required route declarations swapped between routing conditions fail",
         "out-of-repository route fails"
       ]
     },
@@ -32,13 +37,35 @@
         "removing Stage 0 revalidation from the canonical sequence fails while the summary invariant remains unchanged",
         "changing the normalized summary invariant still fails"
       ]
+    },
+    {
+      "id": "PR3-P1-ROUTE-BINDING-002",
+      "review_thread_id": "PRRT_kwDOT3jdV86aVpD1",
+      "review_comment_id": "PRRC_kwDOT3jdV87jFc9Z",
+      "predicate": "A route target remains bound to its declared label and routing condition even when the aggregate destination multiset is unchanged.",
+      "implementation": "Bind normalized destinations to both the Markdown link label and its declaration-line context before comparison.",
+      "verification": [
+        "swapped target mutation fails while all original target files still exist",
+        "swapped complete link mutation fails while every label-to-target pair remains internally consistent"
+      ]
+    },
+    {
+      "id": "PR3-P1-EVIDENCE-001",
+      "review_thread_id": "PRRT_kwDOT3jdV86aVpD6",
+      "review_comment_id": "PRRC_kwDOT3jdV87jFc9e",
+      "predicate": "Every digest in the evidence manifest matches the final bound artifact bytes.",
+      "implementation": "Regenerate test and checker evidence, bind the tested code commit, refresh all changed digests after binding, and run an explicit manifest-integrity check.",
+      "verification": [
+        "test-report digest matches after tested-candidate binding",
+        "all manifest-listed produced artifacts and raw outputs pass SHA-256 verification"
+      ]
     }
   ],
   "changed_code_paths": [
     "scripts/verify_instruction_routes.py",
     "tests/instructions/test_instruction_routes.py"
   ],
-  "change_scope": "Only the two P1 review defects, their regression controls, and required run evidence.",
+  "change_scope": "Only the four P1 review defects across PR #1 and PR #3, their regression controls, and required run evidence.",
   "architecture_change": false,
   "dependency_change": false,
   "rollback": "Revert the hotfix commit. No runtime, persistence, authority, or external-effect state is changed."

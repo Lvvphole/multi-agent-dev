@@ -29,5 +29,9 @@
     }
   ],
   "candidate_result": "PASS",
-  "independent_acceptance": "PENDING_CODEX_REVIEW"
+  "checker_qualification": {
+    "known_good_accepted": 1,
+    "known_bad_mutations_rejected": 16
+  },
+  "independent_acceptance": "EXTERNAL_PR_REVIEW_REQUIRED"
 }

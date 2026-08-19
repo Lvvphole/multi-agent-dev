@@ -79,58 +79,126 @@ REQUIRED_BUSINESS_MARKERS = (
         "software-delivery boundary",
     ),
 )
-LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+LINK_PATTERN = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 BUSINESS_STAGE_PATTERN = re.compile(r"^\| (\d+) \| ([^|]+?) \|", re.MULTILINE)
 CANONICAL_SEQUENCE_PATTERN = re.compile(
     r"The canonical sequence is:\s*```text\n(?P<body>.*?)\n```",
     re.DOTALL,
 )
 CANONICAL_STAGE_LINE_PATTERN = re.compile(r"(?:->\s+)?Stage (\d+) (.+)")
-EXPECTED_ROUTE_TARGETS = {
+
+
+def path_label_binding(
+    declaration: str,
+    target: str,
+) -> tuple[str, str, str]:
+    return declaration, target, target
+
+
+EXPECTED_ROUTE_BINDINGS = {
     ROOT_CONTRACT_NAME: (
-        "ARCHITECTURE.md",
-        "authority/SECURITY.md",
-        "authority/SAFETY.md",
-        "authority/MEMORY.md",
-        "authority/VERIFICATION.md",
-        "docs/specs/problem-to-retained-revenue-operating-system.md",
-        "workflows/implementation/CONTEXT.md",
+        path_label_binding(
+            "| Architecture, boundaries, topology, data ownership, control flow, or runtime design |",
+            "ARCHITECTURE.md",
+        ),
+        path_label_binding(
+            "| Identity, authority, capabilities, A2A trust, secrets, or external effects |",
+            "authority/SECURITY.md",
+        ),
+        path_label_binding(
+            "| Destructive action, safety constraint, approval, reversibility, or escalation |",
+            "authority/SAFETY.md",
+        ),
+        path_label_binding(
+            "| Context, retrieval, durable memory, provenance, freshness, or inheritance |",
+            "authority/MEMORY.md",
+        ),
+        path_label_binding(
+            "| Tests, checkers, evidence, acceptance, completion, or release claims |",
+            "authority/VERIFICATION.md",
+        ),
+        path_label_binding(
+            "| Enterprise goal, client state, customer gap, value cycle, revenue, retention, business stage, or operating metric |",
+            "docs/specs/problem-to-retained-revenue-operating-system.md",
+        ),
+        path_label_binding(
+            "| Scout, Plan, Build, Test, Review, sprint execution, or stage promotion |",
+            "workflows/implementation/CONTEXT.md",
+        ),
     ),
     "ARCHITECTURE.md": (
-        "docs/specs/problem-to-retained-revenue-operating-system.md",
-        "docs/adr/0001-authoritative-agents-and-icm-routing.md",
-        "docs/adr/0002-problem-to-retained-revenue-organizational-objective.md",
+        (
+            "Build a governed multi-agent organization that implements the",
+            "Problem-to-Retained-Revenue Operating System",
+            "docs/specs/problem-to-retained-revenue-operating-system.md",
+        ),
+        (
+            "-",
+            "ADR-0001 - Authoritative AGENTS.md with ICM context routing",
+            "docs/adr/0001-authoritative-agents-and-icm-routing.md",
+        ),
+        (
+            "-",
+            "ADR-0002 - Problem-to-Retained-Revenue organizational objective",
+            "docs/adr/0002-problem-to-retained-revenue-organizational-objective.md",
+        ),
     ),
     "workflows/implementation/CONTEXT.md": (
-        "workflows/implementation/01-scout/CONTEXT.md",
-        "workflows/implementation/02-plan/CONTEXT.md",
-        "workflows/implementation/03-build/CONTEXT.md",
-        "workflows/implementation/04-test/CONTEXT.md",
-        "workflows/implementation/05-review/CONTEXT.md",
+        (
+            "| 01 | Scout | Establish evidence-backed current state and uncertainty |",
+            "01-scout/CONTEXT.md",
+            "workflows/implementation/01-scout/CONTEXT.md",
+        ),
+        (
+            "| 02 | Plan | Bind requirements, data, fitness functions, and the smallest implementation slice |",
+            "02-plan/CONTEXT.md",
+            "workflows/implementation/02-plan/CONTEXT.md",
+        ),
+        (
+            "| 03 | Build | Implement only the accepted slice |",
+            "03-build/CONTEXT.md",
+            "workflows/implementation/03-build/CONTEXT.md",
+        ),
+        (
+            "| 04 | Test | Independently execute and preserve verification evidence |",
+            "04-test/CONTEXT.md",
+            "workflows/implementation/04-test/CONTEXT.md",
+        ),
+        (
+            "| 05 | Review | Adjudicate compliance and promotion readiness |",
+            "05-review/CONTEXT.md",
+            "workflows/implementation/05-review/CONTEXT.md",
+        ),
     ),
 }
 
 
-def local_route_targets(path: Path, errors: list[str]) -> tuple[str, ...]:
+def local_route_bindings(
+    path: Path,
+    errors: list[str],
+) -> tuple[tuple[str, str, str], ...]:
     source = path.relative_to(ROOT).as_posix()
-    targets: list[str] = []
-    for target in LINK_PATTERN.findall(path.read_text(encoding="utf-8")):
-        if "://" in target or target.startswith("#"):
-            continue
-        clean_target = target.split("#", 1)[0]
-        resolved_target = (path.parent / clean_target).resolve()
-        try:
-            repository_target = resolved_target.relative_to(ROOT)
-        except ValueError:
-            errors.append(f"route outside repository in {source}: {target}")
-            continue
+    bindings: list[tuple[str, str, str]] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        for link in LINK_PATTERN.finditer(line):
+            label, target = link.groups()
+            if "://" in target or target.startswith("#"):
+                continue
+            clean_target = target.split("#", 1)[0]
+            resolved_target = (path.parent / clean_target).resolve()
+            try:
+                repository_target = resolved_target.relative_to(ROOT)
+            except ValueError:
+                errors.append(f"route outside repository in {source}: {target}")
+                continue
 
-        repository_target_text = repository_target.as_posix()
-        targets.append(repository_target_text)
-        if not resolved_target.is_file():
-            errors.append(f"broken route in {source}: {repository_target_text}")
+            repository_target_text = repository_target.as_posix()
+            declaration = line[: link.start()].strip()
+            bindings.append((declaration, label, repository_target_text))
+            if not resolved_target.is_file():
+                errors.append(f"broken route in {source}: {repository_target_text}")
 
-    return tuple(targets)
+    return tuple(bindings)
 
 
 def canonical_business_sequence(business_text: str) -> tuple[tuple[int, str], ...]:
@@ -179,17 +247,17 @@ def main() -> int:
             + ", ".join(discovered_instruction_files)
         )
 
-    for source_name, expected_targets in EXPECTED_ROUTE_TARGETS.items():
+    for source_name, expected_bindings in EXPECTED_ROUTE_BINDINGS.items():
         source = ROOT / source_name
         if not source.is_file():
             errors.append(f"missing route source: {source.relative_to(ROOT)}")
             continue
-        actual_targets = local_route_targets(source, errors)
-        if Counter(actual_targets) != Counter(expected_targets):
+        actual_bindings = local_route_bindings(source, errors)
+        if Counter(actual_bindings) != Counter(expected_bindings):
             errors.append(
-                f"route destination mismatch in {source_name}: "
-                f"expected {tuple(sorted(expected_targets))}, "
-                f"got {tuple(sorted(actual_targets))}"
+                f"route binding mismatch in {source_name}: "
+                f"expected {tuple(sorted(expected_bindings))}, "
+                f"got {tuple(sorted(actual_bindings))}"
             )
 
     if not BUSINESS_OPERATING_SPEC.is_file():

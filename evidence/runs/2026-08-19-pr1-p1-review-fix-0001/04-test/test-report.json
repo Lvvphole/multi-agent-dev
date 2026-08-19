@@ -2,9 +2,9 @@
   "schema_version": "1.0.0",
   "run_id": "2026-08-19-pr1-p1-review-fix-0001",
   "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
-  "tested_candidate_commit": "ddf889396f3bbe7e60126a545d84d31cf376e289",
+  "tested_candidate_commit": "PENDING_PUBLICATION",
   "candidate_verdict": "PASS",
-  "independent_acceptance": "PENDING_CODEX_REVIEW",
+  "independent_acceptance": "EXTERNAL_PR_REVIEW_REQUIRED",
   "requirements": [
     {
       "id": "PR1-P1-ROUTE-001",
@@ -14,7 +14,25 @@
         "test_redirected_required_route_is_rejected",
         "test_redirected_architecture_route_is_rejected",
         "test_redirected_workflow_route_is_rejected",
+        "test_swapped_required_route_targets_are_rejected",
+        "test_swapped_complete_route_declarations_are_rejected",
         "test_out_of_repository_route_is_rejected"
+      ]
+    },
+    {
+      "id": "PR3-P1-ROUTE-BINDING-002",
+      "verdict": "PASS",
+      "evidence": [
+        "test_swapped_required_route_targets_are_rejected",
+        "test_swapped_complete_route_declarations_are_rejected"
+      ]
+    },
+    {
+      "id": "PR3-P1-EVIDENCE-001",
+      "verdict": "PASS",
+      "evidence": [
+        "evidence-manifest.json produced_artifacts",
+        "raw/evidence-integrity.stdout.txt"
       ]
     },
     {
@@ -34,9 +52,11 @@
   ],
   "checker_qualification": {
     "known_good_accepted": 1,
-    "known_bad_mutations_rejected": 14,
+    "known_bad_mutations_rejected": 16,
     "required_p1_mutations_rejected": [
       "redirect a required route to another existing repository file",
+      "swap two required route targets without changing the target multiset",
+      "swap two complete route declarations between routing conditions",
       "redirect a required route outside the repository",
       "remove Stage 0 revalidation from the canonical sequence while retaining the summary invariant"
     ],
