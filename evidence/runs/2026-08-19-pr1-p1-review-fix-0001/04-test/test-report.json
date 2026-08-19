@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr1-p1-review-fix-0001",
+  "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
+  "tested_candidate_commit": "PENDING_PUBLICATION",
+  "candidate_verdict": "PASS",
+  "independent_acceptance": "PENDING_CODEX_REVIEW",
+  "requirements": [
+    {
+      "id": "PR1-P1-ROUTE-001",
+      "verdict": "PASS",
+      "evidence": [
+        "test_broken_route_is_rejected",
+        "test_redirected_required_route_is_rejected",
+        "test_redirected_architecture_route_is_rejected",
+        "test_redirected_workflow_route_is_rejected",
+        "test_out_of_repository_route_is_rejected"
+      ]
+    },
+    {
+      "id": "PR1-P1-SEQUENCE-001",
+      "verdict": "PASS",
+      "evidence": [
+        "test_business_canonical_return_sequence_bypass_is_rejected",
+        "test_business_return_path_change_is_rejected"
+      ]
+    }
+  ],
+  "checks": [
+    {"id": "PY-COMPILE", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/python-compile.stdout.txt"},
+    {"id": "INSTRUCTION-ROUTING", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/instruction-route-check.stdout.txt"},
+    {"id": "CHECKER-QUALIFICATION", "verdict": "PASS", "exit_status": 0, "raw_output": "raw/instruction-checker-qualification.stdout.txt"},
+    {"id": "ENGINEERING-RULES", "verdict": "PASS", "exit_status": 0, "blocking_findings": 0, "review_findings": 0, "raw_output": "raw/engineering-rules.stdout.txt"}
+  ],
+  "checker_qualification": {
+    "known_good_accepted": 1,
+    "known_bad_mutations_rejected": 14,
+    "required_p1_mutations_rejected": [
+      "redirect a required route to another existing repository file",
+      "redirect a required route outside the repository",
+      "remove Stage 0 revalidation from the canonical sequence while retaining the summary invariant"
+    ],
+    "qualification_state": "QUALIFIED_FOR_INSTRUCTION_ROUTING"
+  },
+  "scope_limits": [
+    "This candidate result does not merge the change.",
+    "The producer is not the independent code-review authority.",
+    "Independent Codex review must report no major issue before completion is claimed."
+  ]
+}

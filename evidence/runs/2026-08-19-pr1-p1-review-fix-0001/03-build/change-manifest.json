@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-08-19-pr1-p1-review-fix-0001",
+  "repository": "Lvvphole/multi-agent-dev",
+  "base_commit": "85e577c2e10283a9c0b4c5291eb594e6e504f148",
+  "source_pull_request": 1,
+  "source_review_commit": "d6469a30c281ed9f2d929196f41bc90c7c8db911",
+  "requirements": [
+    {
+      "id": "PR1-P1-ROUTE-001",
+      "review_thread_id": "PRRT_kwDOT3jdV86aVDTp",
+      "review_comment_id": "PRRC_kwDOT3jdV87jEkiR",
+      "predicate": "Every required local route resolves to its exact repository-relative destination, no required route is redirected, and no local route escapes the repository.",
+      "implementation": "Replace existence-only link checking with an exact per-router destination multiset and repository-boundary validation.",
+      "verification": [
+        "known-good repository passes",
+        "broken route fails",
+        "redirected AGENTS.md route fails",
+        "redirected ARCHITECTURE.md route fails",
+        "redirected workflow route fails",
+        "out-of-repository route fails"
+      ]
+    },
+    {
+      "id": "PR1-P1-SEQUENCE-001",
+      "review_thread_id": "PRRT_kwDOT3jdV86aVDTr",
+      "review_comment_id": "PRRC_kwDOT3jdV87jEkiV",
+      "predicate": "The canonical business sequence itself is parsed and must equal stages 0 through 11 followed by Stage 0 Objective Definition revalidation and Stage 1 Problem Scouting.",
+      "implementation": "Parse the canonical sequence code block into numbered stages and compare it to the exact expected sequence instead of relying only on the later summary sentence.",
+      "verification": [
+        "known-good canonical sequence passes",
+        "removing Stage 0 revalidation from the canonical sequence fails while the summary invariant remains unchanged",
+        "changing the normalized summary invariant still fails"
+      ]
+    }
+  ],
+  "changed_code_paths": [
+    "scripts/verify_instruction_routes.py",
+    "tests/instructions/test_instruction_routes.py"
+  ],
+  "change_scope": "Only the two P1 review defects, their regression controls, and required run evidence.",
+  "architecture_change": false,
+  "dependency_change": false,
+  "rollback": "Revert the hotfix commit. No runtime, persistence, authority, or external-effect state is changed."
+}

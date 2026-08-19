@@ -57,6 +57,74 @@ class InstructionRouteCheckerTest(unittest.TestCase):
 
         self.assert_rejected(mutate, "broken route in AGENTS.md")
 
+    def test_redirected_required_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    "(AGENTS.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route destination mismatch in AGENTS.md")
+
+    def test_redirected_architecture_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            architecture = root / "ARCHITECTURE.md"
+            text = architecture.read_text(encoding="utf-8")
+            architecture.write_text(
+                text.replace(
+                    "(docs/specs/problem-to-retained-revenue-operating-system.md)",
+                    "(AGENTS.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(
+            mutate,
+            "route destination mismatch in ARCHITECTURE.md",
+        )
+
+    def test_redirected_workflow_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            workflow = root / "workflows" / "implementation" / "CONTEXT.md"
+            text = workflow.read_text(encoding="utf-8")
+            workflow.write_text(
+                text.replace(
+                    "(01-scout/CONTEXT.md)",
+                    "(02-plan/CONTEXT.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(
+            mutate,
+            "route destination mismatch in workflows/implementation/CONTEXT.md",
+        )
+
+    def test_out_of_repository_route_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            outside_target = root.parent / "outside.md"
+            outside_target.write_text("outside", encoding="utf-8")
+            contract = root / "AGENTS.md"
+            text = contract.read_text(encoding="utf-8")
+            contract.write_text(
+                text.replace(
+                    "(authority/SECURITY.md)",
+                    "(../outside.md)",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "route outside repository in AGENTS.md")
+
     def test_stage_order_change_is_rejected(self) -> None:
         def mutate(root: Path) -> None:
             stages = root / "workflows" / "implementation"
@@ -127,6 +195,27 @@ class InstructionRouteCheckerTest(unittest.TestCase):
             )
 
         self.assert_rejected(mutate, "missing: normalized return path")
+
+    def test_business_canonical_return_sequence_bypass_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            specification = (
+                root
+                / "docs"
+                / "specs"
+                / "problem-to-retained-revenue-operating-system.md"
+            )
+            text = specification.read_text(encoding="utf-8")
+            specification.write_text(
+                text.replace(
+                    "  -> Stage 0 Objective Definition revalidation\n"
+                    "  -> Stage 1 Problem Scouting",
+                    "  -> Stage 1 Problem Scouting",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+        self.assert_rejected(mutate, "business canonical sequence mismatch")
 
     def test_closed_exit_success_conflation_is_rejected(self) -> None:
         def mutate(root: Path) -> None:

@@ -1,0 +1,23 @@
+start_utc=2026-08-19T03:29:52Z
+test_broken_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_broken_route_is_rejected) ... ok
+test_business_canonical_return_sequence_bypass_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_business_canonical_return_sequence_bypass_is_rejected) ... ok
+test_business_return_path_change_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_business_return_path_change_is_rejected) ... ok
+test_business_stage_change_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_business_stage_change_is_rejected) ... ok
+test_closed_exit_success_conflation_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_closed_exit_success_conflation_is_rejected) ... ok
+test_known_good_repository_is_accepted (test_instruction_routes.InstructionRouteCheckerTest.test_known_good_repository_is_accepted) ... ok
+test_missing_root_invariant_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_missing_root_invariant_is_rejected) ... ok
+test_missing_stage_heading_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_missing_stage_heading_is_rejected) ... ok
+test_nested_instruction_file_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_nested_instruction_file_is_rejected) ... ok
+test_out_of_repository_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_out_of_repository_route_is_rejected) ... ok
+test_redirected_architecture_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_redirected_architecture_route_is_rejected) ... ok
+test_redirected_required_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_redirected_required_route_is_rejected) ... ok
+test_redirected_workflow_route_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_redirected_workflow_route_is_rejected) ... ok
+test_software_value_overclaim_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_software_value_overclaim_is_rejected) ... ok
+test_stage_order_change_is_rejected (test_instruction_routes.InstructionRouteCheckerTest.test_stage_order_change_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.355s
+
+OK
+end_utc=2026-08-19T03:29:52Z
+exit_status=0

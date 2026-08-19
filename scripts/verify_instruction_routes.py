@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 
@@ -13,8 +14,6 @@ ROOT_CONTRACT_NAME = "AGENTS.md"
 ROOT_OVERRIDE_NAME = "AGENTS.override.md"
 CONTEXT_NAME = "CONTEXT.md"
 ROOT_CONTRACT = ROOT / ROOT_CONTRACT_NAME
-ARCHITECTURE_REFERENCE = ROOT / "ARCHITECTURE.md"
-WORKFLOW_ROUTER = ROOT / "workflows" / "implementation" / CONTEXT_NAME
 BUSINESS_OPERATING_SPEC = (
     ROOT / "docs" / "specs" / "problem-to-retained-revenue-operating-system.md"
 )
@@ -38,6 +37,10 @@ EXPECTED_BUSINESS_STAGES = (
     "Implementation",
     "Value Realization",
     "Retention and Expansion",
+)
+EXPECTED_CANONICAL_SEQUENCE = tuple(enumerate(EXPECTED_BUSINESS_STAGES)) + (
+    (0, "Objective Definition revalidation"),
+    (1, "Problem Scouting"),
 )
 REQUIRED_STAGE_HEADINGS = (
     "## Inputs",
@@ -78,16 +81,70 @@ REQUIRED_BUSINESS_MARKERS = (
 )
 LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 BUSINESS_STAGE_PATTERN = re.compile(r"^\| (\d+) \| ([^|]+?) \|", re.MULTILINE)
+CANONICAL_SEQUENCE_PATTERN = re.compile(
+    r"The canonical sequence is:\s*```text\n(?P<body>.*?)\n```",
+    re.DOTALL,
+)
+CANONICAL_STAGE_LINE_PATTERN = re.compile(r"(?:->\s+)?Stage (\d+) (.+)")
+EXPECTED_ROUTE_TARGETS = {
+    ROOT_CONTRACT_NAME: (
+        "ARCHITECTURE.md",
+        "authority/SECURITY.md",
+        "authority/SAFETY.md",
+        "authority/MEMORY.md",
+        "authority/VERIFICATION.md",
+        "docs/specs/problem-to-retained-revenue-operating-system.md",
+        "workflows/implementation/CONTEXT.md",
+    ),
+    "ARCHITECTURE.md": (
+        "docs/specs/problem-to-retained-revenue-operating-system.md",
+        "docs/adr/0001-authoritative-agents-and-icm-routing.md",
+        "docs/adr/0002-problem-to-retained-revenue-organizational-objective.md",
+    ),
+    "workflows/implementation/CONTEXT.md": (
+        "workflows/implementation/01-scout/CONTEXT.md",
+        "workflows/implementation/02-plan/CONTEXT.md",
+        "workflows/implementation/03-build/CONTEXT.md",
+        "workflows/implementation/04-test/CONTEXT.md",
+        "workflows/implementation/05-review/CONTEXT.md",
+    ),
+}
 
 
-def local_links(path: Path) -> list[Path]:
-    links: list[Path] = []
+def local_route_targets(path: Path, errors: list[str]) -> tuple[str, ...]:
+    source = path.relative_to(ROOT).as_posix()
+    targets: list[str] = []
     for target in LINK_PATTERN.findall(path.read_text(encoding="utf-8")):
         if "://" in target or target.startswith("#"):
             continue
         clean_target = target.split("#", 1)[0]
-        links.append((path.parent / clean_target).resolve())
-    return links
+        resolved_target = (path.parent / clean_target).resolve()
+        try:
+            repository_target = resolved_target.relative_to(ROOT)
+        except ValueError:
+            errors.append(f"route outside repository in {source}: {target}")
+            continue
+
+        repository_target_text = repository_target.as_posix()
+        targets.append(repository_target_text)
+        if not resolved_target.is_file():
+            errors.append(f"broken route in {source}: {repository_target_text}")
+
+    return tuple(targets)
+
+
+def canonical_business_sequence(business_text: str) -> tuple[tuple[int, str], ...]:
+    block = CANONICAL_SEQUENCE_PATTERN.search(business_text)
+    if block is None:
+        return ()
+
+    sequence: list[tuple[int, str]] = []
+    for line in block.group("body").splitlines():
+        stage = CANONICAL_STAGE_LINE_PATTERN.fullmatch(line.strip())
+        if stage is None:
+            return ()
+        sequence.append((int(stage.group(1)), stage.group(2)))
+    return tuple(sequence)
 
 
 def main() -> int:
@@ -122,17 +179,18 @@ def main() -> int:
             + ", ".join(discovered_instruction_files)
         )
 
-    route_sources = [ROOT_CONTRACT, ARCHITECTURE_REFERENCE, WORKFLOW_ROUTER]
-    for source in route_sources:
+    for source_name, expected_targets in EXPECTED_ROUTE_TARGETS.items():
+        source = ROOT / source_name
         if not source.is_file():
             errors.append(f"missing route source: {source.relative_to(ROOT)}")
             continue
-        for target in local_links(source):
-            if not target.exists():
-                errors.append(
-                    f"broken route in {source.relative_to(ROOT)}: "
-                    f"{target.relative_to(ROOT)}"
-                )
+        actual_targets = local_route_targets(source, errors)
+        if Counter(actual_targets) != Counter(expected_targets):
+            errors.append(
+                f"route destination mismatch in {source_name}: "
+                f"expected {tuple(sorted(expected_targets))}, "
+                f"got {tuple(sorted(actual_targets))}"
+            )
 
     if not BUSINESS_OPERATING_SPEC.is_file():
         errors.append(
@@ -154,6 +212,14 @@ def main() -> int:
             errors.append(
                 "business stage order mismatch: "
                 f"expected {expected_business_stages}, got {actual_business_stages}"
+            )
+
+        actual_canonical_sequence = canonical_business_sequence(business_text)
+        if actual_canonical_sequence != EXPECTED_CANONICAL_SEQUENCE:
+            errors.append(
+                "business canonical sequence mismatch: "
+                f"expected {EXPECTED_CANONICAL_SEQUENCE}, "
+                f"got {actual_canonical_sequence}"
             )
 
     stages_root = ROOT / "workflows" / "implementation"
